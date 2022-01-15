@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -7,7 +8,7 @@
     <meta http-equiv="Content-Language" content="en" />
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#4188c9">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
@@ -27,6 +28,7 @@
         });
     </script>
     <!-- Dashboard Core -->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet" />
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <!-- c3.js') }} Charts Plugin -->
@@ -45,8 +47,10 @@
 
     @yield('css')
 </head>
+
 <body class="">
     @yield('content')
 </body>
 @yield('js')
+
 </html>

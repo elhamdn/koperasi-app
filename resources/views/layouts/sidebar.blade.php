@@ -1,28 +1,37 @@
-<div class="" style="flex:1;" id="headerMenuCollapse">
-    <ul class="nav nav-tabs border-0 flex-column flex-lg-column" style="padding-left: 20px;color:black;">
+<div class="container__sidebar" id="headerMenuCollapse">
+    <ul class="nav container__sidebar__ul border-0 flex-column flex-lg-column">
         <li class="nav-item">
-            <a href="{{ url('home') }}" class="nav-link"><i class="fe fe-home"></i> Beranda</a>
+            <a href="{{ url('home') }}" class="nav-link"> Beranda</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link"><i class="fe fe-users"></i> Anggota</a>
+            <a href="" class="nav-link"> Pengajuan</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link"><i class="fe fe-dollar-sign"></i> Setoran</a>
+            <a href="" class="nav-link"> Simpanan</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link"><i class="fe fe-hash"></i> Withdraw</a>
+            <a href="" class="nav-link"> Pinjaman</a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('mutations') }}" class="nav-link"><i class="fe fe-printer"></i> List Mutasi</a>
+            <a href="{{ url('mutations') }}" class="nav-link"> Angsuran</a>
+        </li>
+        <li class="nav-item " id="master-nav">
+            <a href="#" class="nav-link"> Master</a>
+            <span>V</span>
+        </li>
+        <ul class="dropdown-container" id="dropdown-containerid">
+            <li class="nav-item">
+                <a href="{{ url('profile') }}" class="nav-link"> Anggota</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('profile') }}" class="nav-link"> Pengurus</a>
+            </li>
+        </ul>
+        <li class="nav-item">
+            <a href="{{ url('profile') }}" class="nav-link"> Profil</a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('bankinterests') }}" class="nav-link"><i class="fe fe-box"></i> Hitung Bunga</a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('profile') }}" class="nav-link"><i class="fe fe-user"></i> Profil</a>
-        </li>
-        <li class="nav-item">
-            <a href="" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fe fe-log-out"></i> Keluar</a>
+            <a href="" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Keluar</a>
 
             <form id="logout-form" action="" method="POST" style="display: none;">
                 @csrf
@@ -30,3 +39,13 @@
         </li>
     </ul>
 </div>
+
+@section('js')
+<script>
+    const button = document.querySelector('#master-nav')
+
+    button.addEventListener('click', () => {
+        document.querySelector("#dropdown-containerid").classList.toggle("active");
+    })
+</script>
+@endsection
