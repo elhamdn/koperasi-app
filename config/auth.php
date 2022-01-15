@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'pengurus',
+        'passwords' => 'pengurus',
     ],
 
     /*
@@ -38,7 +38,16 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'pengurus',
+        ],
+        'anggota' => [
+            'driver' => 'session',
+            'provider' => 'anggota',
+        ],
+
+        'pengurus' => [
+            'driver' => 'session',
+            'provider' => 'pengurus',
         ],
     ],
 
@@ -60,9 +69,19 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
+        // ],
+
+        'pengurus' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Pengurus::class,
+        ],
+
+        'anggota' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Anggota::class,
         ],
 
         // 'users' => [
@@ -88,8 +107,15 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
+            'provider' => 'pengurus',
+            // 'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'anggota' => [
+            'provider' => 'anggota',
+            // 'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

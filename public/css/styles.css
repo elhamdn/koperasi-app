@@ -35,6 +35,7 @@
 
 .container__sidebar__ul li a {
     color: black;
+    width: 100%;
 }
 
 .dropdown-container {

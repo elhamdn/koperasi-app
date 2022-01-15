@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Anggota extends Model
+class Anggota extends Authenticatable
 {
     use HasFactory;
     protected $primaryKey = 'no_kta';
@@ -20,4 +21,5 @@ class Anggota extends Model
         'total_pinjaman',
         'total_simpanan'
     ];
+    protected $guard = 'anggota';
 }

@@ -31,11 +31,7 @@
             <a href="{{ url('profile') }}" class="nav-link"> Profil</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Keluar</a>
-
-            <form id="logout-form" action="" method="POST" style="display: none;">
-                @csrf
-            </form>
+            <a href="{{url('/logout')}}" class="nav-link" class="btn-li my-2">Keluar</a>
         </li>
     </ul>
 </div>
