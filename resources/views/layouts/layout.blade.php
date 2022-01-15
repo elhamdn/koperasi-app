@@ -6,7 +6,7 @@
         @include('layouts.header')
         <div class="main__container">
             @include('layouts.sidebar')
-            <div class="my-3 my-md-5 main__container__content ">
+            <div class="main__container__content ">
                 <div class="container">
                     <div class="page-header">
                         <h1 class="page-title">@yield('page-title')</h1>

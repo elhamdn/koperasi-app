@@ -24,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        asd
+
                     </tbody>
                 </table>
             </div>
