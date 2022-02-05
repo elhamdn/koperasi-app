@@ -23,16 +23,12 @@ class AuthController extends Controller
             if ($checkAnggota) {
                 $user = Auth::guard('anggota')->user();
                 $id = Auth::guard('anggota')->id();
+                return redirect()->to('/home');
             } else {
                 $user = Auth::guard('pengurus')->user();
                 $id = Auth::guard('pengurus')->id();
+                return redirect()->to('/dashboard');
             }
-
-            return redirect()->to('/home');
-            // if ($user->no_kta) {
-            // } else {
-            //     // return redirect()->to('/lihat-nilai?semester=1');
-            // }
         }
         return view('pages.login');
     }
@@ -49,7 +45,7 @@ class AuthController extends Controller
             }
             if (Auth::guard('pengurus')->check()) {
                 $id = Auth::id();
-                return redirect()->route('/lihat-nilai?semester=1');
+                return redirect()->to('/dashboard');
             } else {
                 Session::flash('error', 'email atau password Pengurus salah');
                 return redirect()->route('login');
@@ -121,9 +117,8 @@ class AuthController extends Controller
 
     public function logout()
     {
-
-        if (Auth::check()) {
-            Auth::logout(); // menghapus session yang aktif
+        if (Auth::guard('pengurus')->check()) {
+            Auth::guard('pengurus')->logout();
         } else {
             Auth::guard('anggota')->logout();
         }

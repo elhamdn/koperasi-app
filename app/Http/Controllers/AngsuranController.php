@@ -15,7 +15,7 @@ class AngsuranController extends Controller
     public function index()
     {
         $nama = 'lala';
-        return view('pages.home', compact('nama'));
+        return view('pages.dashboard', compact('nama'));
     }
 
     /**

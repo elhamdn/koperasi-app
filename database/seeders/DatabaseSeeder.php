@@ -47,13 +47,13 @@ class DatabaseSeeder extends Seeder
 
         DB::table('penguruses')->insert([
             'nip' => 'NIP2201002',
-            'email' => 'bandahara@mailnesia.com',
-            'nama_pengurus' => "Bandahara",
+            'email' => 'bendahara@mailnesia.com',
+            'nama_pengurus' => "Bendahara",
             'alamat_pengurus' => 'Jl. Raya Puspiptek, Buaran, Kec. Pamulang, Kota Tangerang Selatan, Banten 15310',
             'jenis_kelamin' => 'L',
             'nomor_hp' => '08871224025',
             'password' => Hash::make('password'),
-            'jenis_pengurus' => 'bandahara',
+            'jenis_pengurus' => 'bendahara',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
