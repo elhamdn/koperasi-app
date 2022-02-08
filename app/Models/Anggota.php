@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Anggota extends Authenticatable
 {
     use HasFactory;
+    public $incrementing = false;
     protected $primaryKey = 'no_kta';
     protected $fillable = [
         'no_kta',

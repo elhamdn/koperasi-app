@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AngsuranController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\PinjamanController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -30,4 +31,5 @@ Route::middleware('auth:pengurus')->group(function () {
 
 Route::middleware('auth:anggota')->group(function () {
     Route::get('/home', [AnggotaController::class, 'index']);
+    Route::post('/pengajuan-pinjaman', [PinjamanController::class, 'store']);
 });

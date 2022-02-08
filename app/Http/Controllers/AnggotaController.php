@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anggota;
+use App\Models\Pinjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AnggotaController extends Controller
 {
@@ -14,7 +16,9 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        return view('pages.home');
+        $user = Auth::guard('anggota')->user();
+        $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->get();
+        return view('pages.home', compact('user', 'pinjaman'));
     }
 
     /**

@@ -16,7 +16,7 @@ class CreatePinjamenTable extends Migration
         Schema::create('pinjamen', function (Blueprint $table) {
             $table->string('no_transaksi', 12)->primary();
             $table->string('no_kta', 12);
-            $table->datetime('tgl_pinjam');
+            $table->datetime('tgl_pinjam')->nullable();
             $table->string('total_pinjam', 10);
             $table->string('keterangan', 30);
             $table->string('tenor_cicilan', 3);
