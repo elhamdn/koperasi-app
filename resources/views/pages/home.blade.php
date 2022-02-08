@@ -90,7 +90,7 @@
                     @foreach ($pinjaman as $data)
                     <tr class="text-center">
                         <th class="align-middle" scope="row">{{ $data->no_transaksi }}</th>
-                        <td class="align-middle">{{ $data->status_pengajuan }}</td>
+                        <td class="align-middle">{{ $data->status_pengajuan_pinjaman }}</td>
                         <td class="align-middle">Rp. {{ $data->total_pinjam }}</td>
                         <td class="align-middle">{{ $data->tenor_cicilan }} Bulan</td>
                     </tr>

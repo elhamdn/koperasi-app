@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pinjaman;
+use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -13,10 +14,50 @@ class PinjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index_pengajuan(Request $request)
     {
-        //
+        $anggotas = Anggota::all();
+        $no_kta = $request->no_kta;
+        $pinjamans = Pinjaman::where('no_kta', $no_kta)->paginate(5)->withQueryString();
+        return view('pages.pengajuan', compact('anggotas', 'pinjamans', 'no_kta'));
     }
+
+    public function approve_pinjaman(Request $request)
+    {
+        try {
+            $pinjaman = Pinjaman::find($request->no_transaksi);
+            $pinjaman->status_pengajuan_pinjaman = 'approve';
+            $pinjaman->tgl_pinjam = Carbon::now();
+            $pinjaman->alasan_approval = $request->alasan_approval;
+            $pinjaman->save();
+
+            $anggota = Anggota::find($request->no_kta);
+            $anggota->total_pinjaman = (int)$anggota->total_pinjaman + (int)$pinjaman->total_pinjam;
+            $anggota->save();
+
+            return redirect()->to('/pengajuan?no_kta=' . $request->no_kta)->with('message', 'Data Berhasil diapprove');;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->to('/pengajuan?no_kta=' . $request->no_kta)->with('error', 'Data gagal diapprove');;
+        }
+    }
+
+    public function reject_pinjaman(Request $request)
+    {
+        try {
+            $pinjaman = Pinjaman::find($request->no_transaksi);
+            $pinjaman->status_pengajuan_pinjaman = 'reject';
+            $pinjaman->keterangan = $request->keterangan;
+            $pinjaman->save();
+
+            return redirect()->to('/pengajuan?no_kta=' . $request->no_kta)->with('message', 'Data Berhasil diapprove');;
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+            return redirect()->to('/pengajuan?no_kta=' . $request->no_kta)->with('error', 'Data gagal diapprove');;
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +91,7 @@ class PinjamanController extends Controller
             $dataPinjaman->total_pinjam = $request->total_pinjam;
             $dataPinjaman->tgl_pengajuan = Carbon::now();
             $dataPinjaman->bunga = 3;
-            $dataPinjaman->status_pengajuan = 'pending';
+            $dataPinjaman->status_pengajuan_pinjaman = 'pending';
             $dataPinjaman->save();
             return redirect()->to('/home')->with('message', 'Data Berhasil Ditambahkan');;
         } catch (\Throwable $th) {

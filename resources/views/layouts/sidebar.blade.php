@@ -4,7 +4,7 @@
             <a href="{{ url('home') }}" class="nav-link"> Beranda</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link"> Pengajuan</a>
+            <a href="{{ url('pengajuan') }}" class="nav-link"> Pengajuan</a>
         </li>
         <li class="nav-item">
             <a href="" class="nav-link"> Simpanan</a>

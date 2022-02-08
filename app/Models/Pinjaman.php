@@ -17,7 +17,8 @@ class Pinjaman extends Model
         'keterangan',
         'tenor_cicilan',
         'bunga',
-        'status_pengajuan',
-        'tgl_pengajuan'
+        'status_pengajuan_pinjaman',
+        'tgl_pengajuan',
+        'alasan_approval'
     ];
 }

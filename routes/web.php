@@ -27,6 +27,9 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:pengurus')->group(function () {
     Route::get('/dashboard', [AngsuranController::class, 'index']);
+    Route::get('/pengajuan', [PinjamanController::class, 'index_pengajuan']);
+    Route::post('/pengajuan/approve', [PinjamanController::class, 'approve_pinjaman']);
+    Route::post('/pengajuan/reject', [PinjamanController::class, 'reject_pinjaman']);
 });
 
 Route::middleware('auth:anggota')->group(function () {
