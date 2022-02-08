@@ -69,7 +69,7 @@
     </div>
     <div class="header-logout">
         <li>
-            <a href="#Logout">Logout</a>
+            <a href="{{ url('logout') }}">Logout</a>
         </li>
     </div>
 </header>
