@@ -21,8 +21,9 @@ class CreatePinjamenTable extends Migration
             $table->string('keterangan', 30);
             $table->string('tenor_cicilan', 3);
             $table->string('bunga', 3);
-            $table->string('status_pengajuan', 7);
+            $table->string('status_pengajuan_pinjaman', 7);
             $table->datetime('tgl_pengajuan');
+            $table->string('alasan_approval', 30)->nullable();
             $table->foreign('no_kta')->references('no_kta')->on('anggotas')->onDelete('cascade');
             $table->timestamps();
         });
