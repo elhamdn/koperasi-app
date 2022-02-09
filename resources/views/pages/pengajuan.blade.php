@@ -62,6 +62,10 @@
                                                     <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                                     <input type="hidden" name="no_transaksi" value="{{ $data->no_transaksi }}">
                                                     <div class="form-group">
+                                                        <label for="exampleInputEmail1">Bunga</label>
+                                                        <input type="number" name="bunga" class="form-control" id="exampleInputEmail1" min="0" max="100" required placeholder="persen bunga">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="exampleFormControlTextarea1">Alasan Diapprove</label>
                                                         <textarea class="form-control" name="alasan_approval" id="exampleFormControlTextarea1" rows="3">
                                                             </textarea>

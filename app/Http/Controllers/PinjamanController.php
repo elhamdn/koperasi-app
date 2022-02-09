@@ -29,6 +29,7 @@ class PinjamanController extends Controller
             $pinjaman->status_pengajuan_pinjaman = 'approve';
             $pinjaman->tgl_pinjam = Carbon::now();
             $pinjaman->alasan_approval = $request->alasan_approval;
+            $pinjaman->bunga = $request->bunga;
             $pinjaman->save();
 
             $anggota = Anggota::find($request->no_kta);
@@ -90,7 +91,7 @@ class PinjamanController extends Controller
             $dataPinjaman->keterangan = $request->keterangan;
             $dataPinjaman->total_pinjam = $request->total_pinjam;
             $dataPinjaman->tgl_pengajuan = Carbon::now();
-            $dataPinjaman->bunga = 3;
+            $dataPinjaman->bunga = 0;
             $dataPinjaman->status_pengajuan_pinjaman = 'pending';
             $dataPinjaman->save();
             return redirect()->to('/home')->with('message', 'Data Berhasil Ditambahkan');;

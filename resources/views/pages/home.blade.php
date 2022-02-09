@@ -84,6 +84,7 @@
                         <th scope="col">Status Pengajuan</th>
                         <th scope="col">Total Pinjaman</th>
                         <th scope="col">Tenor Cicilan</th>
+                        <th scope="col">Ket Angsuran</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,6 +94,11 @@
                         <td class="align-middle">{{ $data->status_pengajuan_pinjaman }}</td>
                         <td class="align-middle">Rp. {{ $data->total_pinjam }}</td>
                         <td class="align-middle">{{ $data->tenor_cicilan }} Bulan</td>
+                        <td class="align-middle">
+                            <a class="btn btn-info" href="{{ url('/home?no_transaksi_pilihan='.$data->no_transaksi) }}">
+                                Tampilkan
+                            </a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -140,6 +146,36 @@
                 </div>
             </div>
         </section>
+
+        @if ($no_transaksi_pilihan)
+        <hr>
+        <section>
+            <h5>Angsuran </h5>
+            @if ($isSudahLunas)
+            <b class="text-success">Pinjaman Sudah Lunas</b>
+            @endif
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap datatable">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="row">Nomor transaksi</th>
+                            <th>Tanggal Angsuran</th>
+                            <th>Total Angsuran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($angsurans as $data)
+                        <tr class="text-center">
+                            <th class="align-middle" scope="row">{{ $data->no_transaksi }}</th>
+                            <td class="align-middle"> {{ $data->tgl_angsuran}}</td>
+                            <td class="align-middle">Rp. {{ $data->total_angsuran }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        @endif
         <hr>
         <section id="Profile">
             <h5>Biodata</h5>

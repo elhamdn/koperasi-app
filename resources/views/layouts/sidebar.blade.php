@@ -13,7 +13,7 @@
             <a href="" class="nav-link"> Pinjaman</a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('mutations') }}" class="nav-link"> Angsuran</a>
+            <a href="{{ url('angsuran') }}" class="nav-link"> Angsuran</a>
         </li>
         <li class="nav-item " id="master-nav">
             <a href="#" class="nav-link"> Master</a>

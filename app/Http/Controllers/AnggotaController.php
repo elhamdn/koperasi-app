@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Anggota;
 use App\Models\Pinjaman;
+use App\Models\Angsuran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,11 +15,22 @@ class AnggotaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::guard('anggota')->user();
         $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->get();
-        return view('pages.home', compact('user', 'pinjaman'));
+        try {
+            $pinjamanPilihan = Pinjaman::select('tenor_cicilan')->where('no_transaksi', $request->no_transaksi_pilihan)->first();
+            $tenor_cicilan = $pinjamanPilihan->tenor_cicilan ? $pinjamanPilihan->tenor_cicilan : 0;
+            $isSudahLunas = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pilihan)->count() == $tenor_cicilan ? true : false;
+            $no_transaksi_pilihan = $request->no_transaksi_pilihan;
+            $angsurans = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pilihan)->get();
+        } catch (\Throwable $th) {
+            $isSudahLunas = false;
+            $no_transaksi_pilihan = 0;
+            $angsurans = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pilihan)->get();
+        }
+        return view('pages.home', compact('isSudahLunas', 'user', 'pinjaman', 'angsurans', 'no_transaksi_pilihan'));
     }
 
     /**
