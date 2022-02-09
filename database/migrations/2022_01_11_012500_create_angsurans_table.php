@@ -19,7 +19,7 @@ class CreateAngsuransTable extends Migration
             $table->string('no_transaksi_pinjaman', 12);
             $table->datetime('tgl_angsuran');
             $table->string('total_angsuran', 10);
-            $table->string('status_angsuran', 15);
+            // $table->string('status_angsuran', 15);
             $table->foreign('no_kta')->references('no_kta')->on('anggotas')->onDelete('cascade');
             $table->foreign('no_transaksi_pinjaman')->references('no_transaksi')->on('pinjamen')->onDelete('cascade');
             $table->timestamps();
