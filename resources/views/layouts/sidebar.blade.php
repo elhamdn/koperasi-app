@@ -10,9 +10,6 @@
             <a href="" class="nav-link"> Simpanan</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link"> Pinjaman</a>
-        </li>
-        <li class="nav-item">
             <a href="{{ url('angsuran') }}" class="nav-link"> Angsuran</a>
         </li>
         <li class="nav-item " id="master-nav">
@@ -27,9 +24,6 @@
                 <a href="{{ url('profile') }}" class="nav-link"> Pengurus</a>
             </li>
         </ul>
-        <li class="nav-item">
-            <a href="{{ url('profile') }}" class="nav-link"> Profil</a>
-        </li>
         <li class="nav-item">
             <a href="{{url('/logout')}}" class="nav-link" class="btn-li my-2">Keluar</a>
         </li>
