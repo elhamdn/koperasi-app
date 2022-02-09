@@ -30,12 +30,12 @@ class AngsuranController extends Controller
         $pinjamans = Pinjaman::where('no_kta', $request->no_kta)->get();
         $angsurans = Angsuran::where('no_transaksi_pinjaman', $no_transaksi)->paginate(5);
         $pinjamanPilihan = Pinjaman::find($no_transaksi);
+        $anggotaPilihan = Anggota::find($request->no_kta);
         try {
             $isSudahLunas = Angsuran::where('no_transaksi_pinjaman', $no_transaksi)->count() == $pinjamanPilihan->tenor_cicilan ? true : false;
             $Pokokpinjamanperbulan = (int)$pinjamanPilihan->total_pinjam / (int)$pinjamanPilihan->tenor_cicilan;
             $Bungaperbulan = ((int)$pinjamanPilihan->total_pinjam * ((int)$pinjamanPilihan->bunga / 100) / 12);
             $cicilan = round($Pokokpinjamanperbulan + $Bungaperbulan, 0);
-            $anggotaPilihan = Anggota::find($request->no_kta);
             if ($isSudahLunas) {
                 $jmlCicilan = 0;
             } else {
@@ -45,6 +45,7 @@ class AngsuranController extends Controller
             $isSudahLunas = false;
             $Pokokpinjamanperbulan = 0;
             $Bungaperbulan = 0;
+            $jmlCicilan = 0;
             $cicilan = 0;
         }
         return view('pages.angsuran', compact('jmlCicilan', 'anggotaPilihan', 'isSudahLunas', 'cicilan', 'anggotas', 'no_transaksi', 'no_kta', 'pinjamans', 'angsurans'));
