@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Simpanan;
+use App\Models\Anggota;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SimpananController extends Controller
 {
@@ -12,9 +14,12 @@ class SimpananController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $anggotas = Anggota::all();
+        $no_kta = $request->no_kta;
+        $simpanans = Simpanan::where('no_kta', $no_kta)->paginate(5)->withQueryString();
+        return view('pages.simpanan', compact('anggotas', 'simpanans', 'no_kta'));
     }
 
     /**
@@ -35,7 +40,33 @@ class SimpananController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            if ((int)$request->deposit_wajib >= (int)$request->total) {
+                return redirect()->to('/simpanan?no_kta=' . $no_kta)->with('message', 'Duit yang diterima tidak sesuai');;
+            }
+            $latestNomorTransaksi = Simpanan::select('no_transaksi')->latest()->first();
+            $dataSimpanan = new Simpanan();
+            if ($latestNomorTransaksi) {
+                $dataSimpanan->no_transaksi = $latestNomorTransaksi->no_transaksi + 1;
+            } else {
+                $dataSimpanan->no_transaksi = 1;
+            }
+            $depositPokok = (int)$request->total - (int)$request->deposit_wajib;
+            $dataSimpanan->no_kta = $request->no_kta;
+            $dataSimpanan->keterangan = $request->keterangan;
+            $dataSimpanan->tgl_deposit = Carbon::now();
+            $dataSimpanan->deposit_wajib = $request->deposit_wajib;
+            $dataSimpanan->deposit_pokok = $depositPokok;
+            $dataSimpanan->save();
+
+            $anggota = Anggota::find($request->no_kta);
+            $anggota->total_simpanan = (int)$anggota->total_simpanan + (int)$request->total;
+            $anggota->save();
+
+            return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('message', 'Data Berhasil Ditambahkan');;
+        } catch (\Throwable $th) {
+            return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('error', 'Data Gagal Ditambahkan');;
+        }
     }
 
     /**

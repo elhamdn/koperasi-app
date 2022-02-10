@@ -7,7 +7,7 @@
             <a href="{{ url('pengajuan') }}" class="nav-link"> Pengajuan</a>
         </li>
         <li class="nav-item">
-            <a href="" class="nav-link"> Simpanan</a>
+            <a href="{{ url('simpanan') }}" class="nav-link"> Simpanan</a>
         </li>
         <li class="nav-item">
             <a href="{{ url('angsuran') }}" class="nav-link"> Angsuran</a>

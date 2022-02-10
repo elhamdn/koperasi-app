@@ -5,6 +5,7 @@ use App\Http\Controllers\AngsuranController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\SimpananController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -27,6 +28,10 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:pengurus')->group(function () {
     Route::get('/dashboard', [AngsuranController::class, 'index']);
+
+    Route::get('/simpanan', [SimpananController::class, 'index']);
+    Route::post('/simpanan/add', [SimpananController::class, 'store']);
+
     Route::get('/angsuran', [AngsuranController::class, 'index_angsuran']);
     Route::post('/angsuran/add', [AngsuranController::class, 'store']);
 
