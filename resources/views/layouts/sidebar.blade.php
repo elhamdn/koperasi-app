@@ -18,10 +18,10 @@
         </li>
         <ul class="dropdown-container" id="dropdown-containerid">
             <li class="nav-item">
-                <a href="{{ url('profile') }}" class="nav-link"> Anggota</a>
+                <a href="{{ url('master/anggota') }}" class="nav-link"> Anggota</a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('profile') }}" class="nav-link"> Pengurus</a>
+                <a href="{{ url('master/pengurus') }}" class="nav-link"> Pengurus</a>
             </li>
         </ul>
         <li class="nav-item">

@@ -5,6 +5,7 @@ use App\Http\Controllers\AngsuranController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\SimpananController;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,6 +35,14 @@ Route::middleware('auth:pengurus')->group(function () {
 
     Route::get('/angsuran', [AngsuranController::class, 'index_angsuran']);
     Route::post('/angsuran/add', [AngsuranController::class, 'store']);
+
+    Route::get('/master/anggota', [AnggotaController::class, 'index_master']);
+    Route::post('/anggota/add', [AnggotaController::class, 'store']);
+    Route::post('/anggota/edit', [AnggotaController::class, 'edit']);
+
+    Route::get('/master/pengurus', [PengurusController::class, 'index']);
+    Route::post('/pengurus/add', [PengurusController::class, 'store']);
+    Route::post('/pengurus/edit', [PengurusController::class, 'edit']);
 
     Route::get('/pengajuan', [PinjamanController::class, 'index_pengajuan']);
     Route::post('/pengajuan/approve', [PinjamanController::class, 'approve_pinjaman']);

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Pengurus extends Authenticatable
 {
     use HasFactory;
+    public $incrementing = false;
     protected $primaryKey = 'nip';
     protected $fillable = [
         'nip',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengurus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PengurusController extends Controller
 {
@@ -14,7 +15,9 @@ class PengurusController extends Controller
      */
     public function index()
     {
-        //
+        $penguruses = Pengurus::paginate(5);
+
+        return view('pages.pengurus', compact('penguruses'));
     }
 
     /**
@@ -35,7 +38,29 @@ class PengurusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $Cek = Pengurus::where('email', $request->email)->orWhere('nip', $request->nip)->first();
+            if ($Cek) {
+                return redirect()->to('/master/pengurus')->with('error', 'Data sudah ada');;
+            }
+
+            $pengurus = new Pengurus();
+            $pengurus->nip = $request->nip;
+            $pengurus->email = $request->email;
+            $pengurus->jenis_kelamin = $request->jenis_kelamin;
+            $pengurus->nama_pengurus = $request->nama_pengurus;
+            $pengurus->alamat_pengurus = $request->alamat_pengurus;
+            $pengurus->jenis_pengurus = $request->jenis_pengurus;
+            $pengurus->nomor_hp = $request->nomor_hp;
+            $pengurus->password = Hash::make($request->password);
+            $pengurus->save();
+
+            return redirect()->to('/master/pengurus')->with('message', 'Data Berhasil');;
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+            return redirect()->to('/master/pengurus')->with('error', 'Data gagal diapprove');;
+        }
     }
 
     /**
@@ -55,9 +80,27 @@ class PengurusController extends Controller
      * @param  \App\Models\Pengurus  $pengurus
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pengurus $pengurus)
+    public function edit(Request $request)
     {
-        //
+        try {
+            $pengurus = Pengurus::find($request->nip);
+            $pengurus->email = $request->email;
+            $pengurus->jenis_kelamin = $request->jenis_kelamin;
+            $pengurus->jenis_pengurus = $request->jenis_pengurus;
+            $pengurus->nama_pengurus = $request->nama_pengurus;
+            $pengurus->alamat_pengurus = $request->alamat_pengurus;
+            $pengurus->nomor_hp = $request->nomor_hp;
+            if ($request->password) {
+                $pengurus->password = Hash::make($request->password);
+            }
+            $pengurus->save();
+
+            return redirect()->to('/master/pengurus')->with('message', 'Data Berhasil');;
+        } catch (\Throwable $th) {
+            //throw $th;
+
+            return redirect()->to('/master/pengurus')->with('error', 'Data gagal diapprove');;
+        }
     }
 
     /**

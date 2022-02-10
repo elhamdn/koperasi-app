@@ -104,7 +104,7 @@ class AngsuranController extends Controller
             return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', 'Data Berhasil diapprove');;
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
+            // dd($th);
             return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('error', 'Data gagal diapprove');;
         }
     }

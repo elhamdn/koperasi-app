@@ -7,6 +7,7 @@ use App\Models\Pinjaman;
 use App\Models\Angsuran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AnggotaController extends Controller
 {
@@ -33,6 +34,14 @@ class AnggotaController extends Controller
         return view('pages.home', compact('isSudahLunas', 'user', 'pinjaman', 'angsurans', 'no_transaksi_pilihan'));
     }
 
+    public function index_master(Request $request)
+    {
+        $anggotas = Anggota::paginate(5);
+
+        return view('pages.anggota', compact('anggotas'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -51,7 +60,30 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $anggotaCek = Anggota::where('email', $request->email)->orWhere('no_kta', $request->no_kta)->first();
+            if ($anggotaCek) {
+                return redirect()->to('/master/anggota')->with('error', 'Data sudah ada');;
+            }
+
+            $anggota = new Anggota();
+            $anggota->no_kta = $request->no_kta;
+            $anggota->email = $request->email;
+            $anggota->jenis_kelamin = $request->jenis_kelamin;
+            $anggota->nama_anggota = $request->nama_anggota;
+            $anggota->alamat_anggota = $request->alamat_anggota;
+            $anggota->nomor_hp = $request->nomor_hp;
+            $anggota->password = Hash::make($request->password);
+            $anggota->total_pinjaman = 0;
+            $anggota->total_simpanan = 0;
+            $anggota->save();
+
+            return redirect()->to('/master/anggota')->with('message', 'Data Berhasil');;
+        } catch (\Throwable $th) {
+            //throw $th;
+            // dd($th);
+            return redirect()->to('/master/anggota')->with('error', 'Data gagal diapprove');;
+        }
     }
 
     /**
@@ -71,9 +103,25 @@ class AnggotaController extends Controller
      * @param  \App\Models\Anggota  $anggota
      * @return \Illuminate\Http\Response
      */
-    public function edit(Anggota $anggota)
+    public function edit(Request $request)
     {
-        //
+        try {
+            $anggota = Anggota::find($request->no_kta);
+            $anggota->email = $request->email;
+            $anggota->jenis_kelamin = $request->jenis_kelamin;
+            $anggota->nama_anggota = $request->nama_anggota;
+            $anggota->alamat_anggota = $request->alamat_anggota;
+            $anggota->nomor_hp = $request->nomor_hp;
+            if ($request->password) {
+                $anggota->password = Hash::make($request->password);
+            }
+            $anggota->save();
+
+            return redirect()->to('/master/anggota')->with('message', 'Data Berhasil');;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->to('/master/anggota')->with('error', 'Data gagal diapprove');;
+        }
     }
 
     /**
