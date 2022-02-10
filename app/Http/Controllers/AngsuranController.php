@@ -69,6 +69,7 @@ class AngsuranController extends Controller
      */
     public function store(Request $request)
     {
+
         $total_cicilan_skrng = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pinjaman)->sum('total_angsuran');
         $jmlPinjam = Pinjaman::where('no_transaksi', $request->no_transaksi_pinjaman)->first();
         $total_bunga = (((int)$jmlPinjam->total_pinjam * ((int)$jmlPinjam->bunga / 100) / 12)) * (int)$jmlPinjam->tenor_cicilan;
@@ -89,6 +90,12 @@ class AngsuranController extends Controller
             $angsuran->tgl_angsuran = Carbon::now();
             $angsuran->total_angsuran = $request->cicilan;
             $angsuran->save();
+
+            if ($request->isChecked) {
+                $anggota2 = Anggota::find($request->no_kta);
+                $hasil = (int)$anggota2->total_simpanan - (int)$request->cicilan;
+                $anggota2->update(['total_simpanan' => $hasil]);
+            }
 
             $pinjamanPilihan = Pinjaman::select('tenor_cicilan', 'total_pinjam')->where('no_transaksi', $request->no_transaksi_pinjaman)->first();
             $tenor_cicilan = $pinjamanPilihan->tenor_cicilan ? $pinjamanPilihan->tenor_cicilan : 0;

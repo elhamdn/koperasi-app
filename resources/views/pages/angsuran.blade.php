@@ -58,6 +58,15 @@
                                     <form method="post" action="{{ url('/angsuran/add') }}" target="invisible">
                                         @csrf
                                         <span>Cicilan Yang Harus Dibayar : Rp. {{$cicilan}}</span>
+                                        <br>
+                                        <span>Simpanan Anda : Rp. {{$anggotaPilihan->total_pinjaman}}</span>
+                                        <br>
+                                        <div>
+                                            <input class="m-2" type="checkbox" name="isChecked" id="flexCheckChecked">
+                                            <label class="form-check-label" for="flexCheckChecked">
+                                                Pakai Uang Simpanan?
+                                            </label>
+                                        </div>
                                         <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                         <input type="hidden" name="no_transaksi_pinjaman" value="{{ $no_transaksi }}">
                                         <input type="hidden" name="cicilan" value="{{ $cicilan }}">
