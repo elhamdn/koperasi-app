@@ -1,23 +1,18 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="page">
-    <div class="flex-fill">
-        @include('layouts.header')
-        <div class="main__container">
-            @include('layouts.sidebar')
-            <div class="main__container__content ">
-                <div class="container">
-                    <div class="page-header">
-                        <h1 class="page-title">@yield('page-title')</h1>
-                    </div>
-                    <div class="main__container__content__inner">
-                        @yield('content-app')
-                    </div>
-                </div>
-            </div>
+<div id="app">
+    @include('layouts.sidebar') 
+    <div id="main" style="background: #f2f7ff; min-height: 100vh">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        <div class="page-content">
+            @yield('content-app')
         </div>
     </div>
-    @include('layouts.footer')
 </div>
+
 @endsection

@@ -7,6 +7,8 @@ use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use DB;
+
 class PinjamanController extends Controller
 {
     /**
@@ -18,7 +20,7 @@ class PinjamanController extends Controller
     {
         $anggotas = Anggota::all();
         $no_kta = $request->no_kta;
-        $pinjamans = Pinjaman::where('no_kta', $no_kta)->paginate(5)->withQueryString();
+        $pinjamans = DB::table('pinjamen')->join('anggotas', 'anggotas.no_kta', '=', 'pinjamen.no_kta')->where('pinjamen.no_kta', $no_kta)->paginate(5)->withQueryString();
         return view('pages.pengajuan', compact('anggotas', 'pinjamans', 'no_kta'));
     }
 
@@ -89,7 +91,7 @@ class PinjamanController extends Controller
             $dataPinjaman->no_kta = $request->no_kta;
             $dataPinjaman->tenor_cicilan = $request->tenor_cicilan;
             $dataPinjaman->keterangan = $request->keterangan;
-            $dataPinjaman->total_pinjam = $request->total_pinjam;
+            $dataPinjaman->total_pinjam = str_replace(".", "", $request->total_pinjam);
             $dataPinjaman->tgl_pengajuan = Carbon::now();
             $dataPinjaman->bunga = 0;
             $dataPinjaman->status_pengajuan_pinjaman = 'pending';

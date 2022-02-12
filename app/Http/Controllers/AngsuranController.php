@@ -8,6 +8,8 @@ use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use App\Http\Helpers\Helper;
+
 
 class AngsuranController extends Controller
 {
@@ -27,14 +29,15 @@ class AngsuranController extends Controller
         $anggotas = Anggota::all();
         $no_kta = $request->no_kta;
         $no_transaksi = $request->no_transaksi;
-        $pinjamans = Pinjaman::where('no_kta', $request->no_kta)->get();
-        $angsurans = Angsuran::where('no_transaksi_pinjaman', $no_transaksi)->paginate(5);
+        $pinjamans = Pinjaman::where('no_kta', $request->no_kta)->where('status_pengajuan_pinjaman', 'approve')->get();
+        $angsurans = Angsuran::where('no_transaksi_pinjaman', $no_transaksi)->paginate(5)->withQueryString();
+
         $pinjamanPilihan = Pinjaman::find($no_transaksi);
         $anggotaPilihan = Anggota::find($request->no_kta);
         try {
             $isSudahLunas = Angsuran::where('no_transaksi_pinjaman', $no_transaksi)->count() == $pinjamanPilihan->tenor_cicilan ? true : false;
-            $Pokokpinjamanperbulan = (int)$pinjamanPilihan->total_pinjam / (int)$pinjamanPilihan->tenor_cicilan;
-            $Bungaperbulan = ((int)$pinjamanPilihan->total_pinjam * ((int)$pinjamanPilihan->bunga / 100) / 12);
+            $Pokokpinjamanperbulan = round((int)$pinjamanPilihan->total_pinjam / (int)$pinjamanPilihan->tenor_cicilan);
+            $Bungaperbulan = round(((int)$pinjamanPilihan->total_pinjam * ((int)$pinjamanPilihan->bunga / 100) / 12), 0);
             $cicilan = round($Pokokpinjamanperbulan + $Bungaperbulan, 0);
             if ($isSudahLunas) {
                 $jmlCicilan = 0;
@@ -48,7 +51,10 @@ class AngsuranController extends Controller
             $jmlCicilan = 0;
             $cicilan = 0;
         }
-        return view('pages.angsuran', compact('jmlCicilan', 'anggotaPilihan', 'isSudahLunas', 'cicilan', 'anggotas', 'no_transaksi', 'no_kta', 'pinjamans', 'angsurans'));
+        // $cicilan = Helper::revertMoney($cicilan);
+        // $Bungaperbulan = Helper::revertMoney($Bungaperbulan);
+        $totalSimpanan = $anggotaPilihan ? $anggotaPilihan->total_simpanan : 0;
+        return view('pages.angsuran', compact('jmlCicilan', 'anggotaPilihan', 'isSudahLunas', 'cicilan', 'anggotas', 'no_transaksi', 'no_kta', 'pinjamans', 'angsurans', 'Pokokpinjamanperbulan', 'Bungaperbulan', 'totalSimpanan'));
     }
 
     /**
@@ -69,12 +75,9 @@ class AngsuranController extends Controller
      */
     public function store(Request $request)
     {
-
-        $total_cicilan_skrng = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pinjaman)->sum('total_angsuran');
-        $jmlPinjam = Pinjaman::where('no_transaksi', $request->no_transaksi_pinjaman)->first();
-        $total_bunga = (((int)$jmlPinjam->total_pinjam * ((int)$jmlPinjam->bunga / 100) / 12)) * (int)$jmlPinjam->tenor_cicilan;
-        $total_diharapkan_lunas = (int)$jmlPinjam->total_pinjam + round($total_bunga, 0);
-        if ($total_cicilan_skrng == $total_diharapkan_lunas) {
+        $tenor_cicilan_dibayar = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pinjaman)->count();
+        $pinjaman = Pinjaman::where('no_transaksi', $request->no_transaksi_pinjaman)->first();
+        if ($tenor_cicilan_dibayar == $pinjaman->tenor_cicilan) {
             return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', 'Tagihan Sudah Lunas');;
         }
         try {
@@ -88,12 +91,13 @@ class AngsuranController extends Controller
             $angsuran->no_kta = $request->no_kta;
             $angsuran->no_transaksi_pinjaman = $request->no_transaksi_pinjaman;
             $angsuran->tgl_angsuran = Carbon::now();
-            $angsuran->total_angsuran = $request->cicilan;
+            $angsuran->biaya_cicilan = $request->biaya_cicilan;
+            $angsuran->biaya_bunga = $request->biaya_bunga;
             $angsuran->save();
 
             if ($request->isChecked) {
                 $anggota2 = Anggota::find($request->no_kta);
-                $hasil = (int)$anggota2->total_simpanan - (int)$request->cicilan;
+                $hasil = (int)$anggota2->total_simpanan - ((int)$request->biaya_cicilan+(int)$request->biaya_bunga);
                 $anggota2->update(['total_simpanan' => $hasil]);
             }
 
@@ -111,7 +115,7 @@ class AngsuranController extends Controller
             return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', 'Data Berhasil diapprove');;
         } catch (\Throwable $th) {
             //throw $th;
-            // dd($th);
+            dd($th);
             return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('error', 'Data gagal diapprove');;
         }
     }

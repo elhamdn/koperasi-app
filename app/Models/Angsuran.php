@@ -13,7 +13,8 @@ class Angsuran extends Model
         'no_transaksi',
         'no_kta',
         'no_transaksi_pinjaman',
-        'total_angsuran',
+        'biaya_cicilan',
+        'biaya_bunga',
         'tgl_angsuran',
     ];
 }

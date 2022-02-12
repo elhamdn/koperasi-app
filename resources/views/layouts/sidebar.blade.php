@@ -1,33 +1,85 @@
-<div class="container__sidebar" id="headerMenuCollapse">
-    <ul class="nav container__sidebar__ul border-0 flex-column flex-lg-column">
-        <li class="nav-item">
-            <a href="{{ url('home') }}" class="nav-link"> Beranda</a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('pengajuan') }}" class="nav-link"> Pengajuan</a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('simpanan') }}" class="nav-link"> Simpanan</a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url('angsuran') }}" class="nav-link"> Angsuran</a>
-        </li>
-        <li class="nav-item " id="master-nav">
-            <a href="#" class="nav-link"> Master</a>
-            <span>V</span>
-        </li>
-        <ul class="dropdown-container" id="dropdown-containerid">
-            <li class="nav-item">
-                <a href="{{ url('master/anggota') }}" class="nav-link"> Anggota</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ url('master/pengurus') }}" class="nav-link"> Pengurus</a>
-            </li>
-        </ul>
-        <li class="nav-item">
-            <a href="{{url('/logout')}}" class="nav-link" class="btn-li my-2">Keluar</a>
-        </li>
-    </ul>
+<div id="sidebar" class="active">
+    <div class="sidebar-wrapper active ps ps--active-y">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo w-100 text-center">
+                    <a href="index.html"><img src="https://kopmafeuii.com/wp-content/uploads/2017/06/LAMBANG-KOPERASI.png" alt="Logo" srcset="" style="object-fit: contain; width: 100px;height:100px"></a>
+                </div>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                
+                <li class="sidebar-item">
+                    <a href="{{ url('dashboard') }}" class="sidebar-link">
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Beranda</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="{{ url('pengajuan') }}" class="sidebar-link">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>Pengajuan</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="{{ url('simpanan') }}" class="sidebar-link">
+                    <i class="bi bi-archive-fill"></i>
+                        <span>Simpanan</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a href="{{ url('angsuran') }}" class="sidebar-link">
+                        <i class="bi bi-file-text-fill"></i>
+                        <span>Angsuran</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-item  has-sub">
+                    <a class="sidebar-link">
+                        <i class="bi bi-stack"></i>
+                        <span>Master</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="{{ url('master/anggota') }}">
+                                <i class="bi bi-people-fill"></i>
+                                <span>Anggota</span>
+                            </a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ url('master/pengurus') }}">
+                                <i class="bi bi-person-badge"></i>
+                                <span>Pengurus</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item ">
+                    <a href="{{url('/logout')}}" class="sidebar-link">
+                        <i class="bi bi-door-closed-fill"></i>
+                        <span>Keluar</span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+            </div>
+        </div>
+        <div class="ps__rail-y" style="top: 0px; height: 689px; right: 0px;">
+            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 287px;"></div>
+        </div>
+    </div>
 </div>
 
 @section('js')

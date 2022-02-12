@@ -28,7 +28,7 @@ Route::get('logout', [AuthController::class, 'logout']);
 // Route::post('register', [AuthController::class, 'register']);
 
 Route::middleware('auth:pengurus')->group(function () {
-    Route::get('/dashboard', [AngsuranController::class, 'index']);
+    Route::get('/dashboard', [PengurusController::class, 'dashboard']);
 
     Route::get('/simpanan', [SimpananController::class, 'index']);
     Route::post('/simpanan/add', [SimpananController::class, 'store']);

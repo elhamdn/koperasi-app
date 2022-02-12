@@ -106,7 +106,7 @@
             <span>Total Pinjaman : Rp. {{$user->total_pinjaman}}</span>
             <span>Total Simpanan : Rp. {{$user->total_simpanan}}</span>
 
-            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
+            <button id="btn_ajukan" type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
                 Ajukan Pinjaman
             </button>
 
@@ -126,7 +126,7 @@
                                 <input type="hidden" name="no_kta" value="{{ $user->no_kta }}">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Total Pinjam</label>
-                                    <input type="number" name="total_pinjam" class="form-control mr-3" id="exampleFormControlInput1" placeholder="0" min="0">
+                                    <input type="text" name="total_pinjam" class="form-control mr-3" id="dengan-rupiah" placeholder="0" max="10">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput2">Tenor Cicilan</label>
@@ -160,6 +160,8 @@
                         <tr class="text-center">
                             <th scope="row">Nomor transaksi</th>
                             <th>Tanggal Angsuran</th>
+                            <th>Biaya Cicilan</th>
+                            <th>Biaya Bunga</th>
                             <th>Total Angsuran</th>
                         </tr>
                     </thead>
@@ -168,7 +170,9 @@
                         <tr class="text-center">
                             <th class="align-middle" scope="row">{{ $data->no_transaksi }}</th>
                             <td class="align-middle"> {{ $data->tgl_angsuran}}</td>
-                            <td class="align-middle">Rp. {{ $data->total_angsuran }}</td>
+                            <td class="align-middle">Rp. {{ $data->biaya_cicilan }}</td>
+                            <td class="align-middle">Rp. {{ $data->biaya_bunga }}</td>
+                            <td class="align-middle">Rp. {{ $data->total_tagihan }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -183,4 +187,43 @@
         </section>
     </main>
 </div>
+@endsection
+
+@section('js')
+<script>
+
+    var buttonAjukan = document.getElementById('btn_ajukan');
+    var modal = document.getElementById('exampleModal');
+
+    console.log(modal)
+
+    buttonAjukan.addEventListener('click', () => {
+
+        var dengan_rupiah = document.getElementById('dengan-rupiah');
+        dengan_rupiah.addEventListener('keyup', function(e)
+        {
+            dengan_rupiah.value = formatRupiah(this.value);
+        });
+        
+        /* Fungsi */
+        function formatRupiah(angka, prefix)
+        {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split    = number_string.split(','),
+                sisa     = split[0].length % 3,
+                rupiah     = split[0].substr(0, sisa),
+                ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
+                
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+    })
+
+</script>
+
 @endsection

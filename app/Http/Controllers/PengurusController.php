@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengurus;
+use App\Models\Anggota;
+use App\Models\Angsuran;
+use App\Models\Pinjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
+use DB;
+
+use App\Http\Helpers\Helper;
 
 class PengurusController extends Controller
 {
@@ -124,5 +131,22 @@ class PengurusController extends Controller
     public function destroy(Pengurus $pengurus)
     {
         //
+    }
+
+    public function dashboard()
+    {
+        $totalAnggota = Anggota::count();
+        $totalSimpanan = Anggota::sum('total_simpanan');
+        $totalPinjaman = Anggota::sum('total_pinjaman');
+        $totalPinjaman = Helper::revertMoney($totalPinjaman);
+        $totalSimpanan = Helper::revertMoney($totalSimpanan);
+
+        $simpanan = DB::table('simpanans')->join('anggotas','anggotas.no_kta','simpanans.no_kta')->latest('tgl_deposit')->limit(5)->get();
+        $angsuran = DB::table('angsurans')->join('anggotas','anggotas.no_kta','angsurans.no_kta')->latest('tgl_angsuran')->limit(5)->get();
+
+        $grafikAngsuran = DB::select(DB::raw("select count(*) as totalMothly, sum(biaya_bunga)+sum(biaya_cicilan) as total_biaya, MONTH(tgl_angsuran) as bulan from angsurans group by month(tgl_angsuran) limit 6;"));
+        $grafikSimpanan = DB::select(DB::raw("select count(*) as totalMothly, sum(deposit_pokok)+sum(deposit_wajib) as total_biaya, MONTH(tgl_deposit) as bulan from simpanans group by month(tgl_deposit) limit 6;"));
+
+        return view('pages.dashboard', compact('totalAnggota', 'totalSimpanan', 'totalPinjaman', 'angsuran', 'simpanan', 'grafikSimpanan', 'grafikAngsuran'));
     }
 }
