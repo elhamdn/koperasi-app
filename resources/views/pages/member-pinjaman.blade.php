@@ -55,19 +55,30 @@
 
                             <table>
                                 <tr>
-                                    <td>Status </td>
+                                    <td><span class="text-secondary">Status</span></td>
                                     <td>: </td>
                                     <td>{{$data->status_pengajuan_pinjaman}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Total Pinjaman</td>
+                                    <td><span class="text-secondary">Total Pinjaman</span></td>
                                     <td>: </td>
                                     <td>{{$Helper->revertMoney($data->total_pinjam)}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Tenor Cicilan</td>
+                                    <td><span class="text-secondary">Tenor Cicilan</span></td>
                                     <td>: </td>
-                                    <td>{{$data->tenor_cicilan}}</td>
+                                    <td>{{$data->tenor_cicilan}} Bulan</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="text-secondary">Sisa Cicilan</span></td>
+                                    <td>: </td>
+                                    <td>
+                                        @foreach($angsuran as $a)
+                                        @if($a->no_transaksi_pinjaman == $data->no_transaksi)
+                                            {{$data->tenor_cicilan - $a->total}} Bulan
+                                        @endif
+                                        @endforeach
+                                    </td>
                                 </tr>
                             </table>
                             

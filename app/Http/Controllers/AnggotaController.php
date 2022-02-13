@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use DB;
+
 class AnggotaController extends Controller
 {
     /**
@@ -176,11 +178,13 @@ class AnggotaController extends Controller
         $user = Auth::guard('anggota')->user();
 
         try {
-            $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->latest('created_at')->paginate(2)->withQueryString();
+
+            $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->latest('created_at')->paginate(5)->withQueryString();
+            $angsuran = DB::select(DB::raw("select count(*) as total, no_transaksi_pinjaman from angsurans WHERE no_kta = '".$user->no_kta."' group by no_transaksi_pinjaman;"));
         } catch (\Throwable $th) {
             dd($th);
         }
-        return view('pages.member-pinjaman', compact('pinjaman', 'user'));
+        return view('pages.member-pinjaman', compact('pinjaman', 'user', 'angsuran'));
     }
 
     public function simpananMember(Request $request)
@@ -188,7 +192,7 @@ class AnggotaController extends Controller
         $user = Auth::guard('anggota')->user();
 
         try {
-            $simpanan = Simpanan::where('no_kta', $user->no_kta)->latest('created_at')->paginate(2)->withQueryString();
+            $simpanan = Simpanan::where('no_kta', $user->no_kta)->latest('created_at')->paginate(5)->withQueryString();
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -200,7 +204,7 @@ class AnggotaController extends Controller
         $user = Auth::guard('anggota')->user();
 
         try {
-            $angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('created_at')->paginate(2)->withQueryString();
+            $angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('created_at')->paginate(5)->withQueryString();
         } catch (\Throwable $th) {
             dd($th);
         }

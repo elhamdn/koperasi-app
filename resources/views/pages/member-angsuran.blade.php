@@ -19,22 +19,22 @@
 
                             <table>
                                 <tr>
-                                    <td>Biaya Bunga </td>
+                                    <td><span class="text-secondary">Biaya Bunga</span></td>
                                     <td>: </td>
                                     <td>{{$Helper->revertMoney($data->biaya_bunga)}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Biaya Cicilan</td>
+                                    <td><span class="text-secondary">Biaya Cicilan</span></td>
                                     <td>: </td>
                                     <td>{{$Helper->revertMoney($data->biaya_cicilan)}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Total Biaya</td>
+                                    <td><span class="text-secondary">Total Biaya</span></td>
                                     <td>: </td>
                                     <td>{{$Helper->revertMoney($data->biaya_cicilan+$data->biaya_bunga)}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Tanggal Angsuran</td>
+                                    <td><span class="text-secondary">Tanggal Angsuran</span></td>
                                     <td>: </td>
                                     <td>{{$data->tgl_angsuran}}</td>
                                 </tr>

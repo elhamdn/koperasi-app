@@ -19,22 +19,22 @@
 
                             <table>
                                 <tr>
-                                    <td>Deposit Pokok </td>
+                                    <td><span class="text-secondary">Deposit Pokok</span></td>
                                     <td>: </td>
                                     <td>{{$Helper->revertMoney($data->deposit_pokok)}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Deposit Wajib</td>
+                                    <td><span class="text-secondary">Deposit Wajib</span></td>
                                     <td>: </td>
                                     <td>{{$Helper->revertMoney($data->deposit_wajib)}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Keterangan</td>
+                                    <td><span class="text-secondary">Keterangan</span></td>
                                     <td>: </td>
                                     <td>{{$data->keterangan}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Tanggal Deposit</td>
+                                    <td><span class="text-secondary">Tanggal Deposit</span></td>
                                     <td>: </td>
                                     <td>{{$data->tgl_deposit}}</td>
                                 </tr>
