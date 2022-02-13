@@ -18,8 +18,9 @@ class SimpananController extends Controller
     {
         $anggotas = Anggota::all();
         $no_kta = $request->no_kta;
-        $simpanans = Simpanan::where('no_kta', $no_kta)->paginate(5)->withQueryString();
-        return view('pages.simpanan', compact('anggotas', 'simpanans', 'no_kta'));
+        $simpanans = Simpanan::where('no_kta', $no_kta)->latest('created_at')->paginate(5)->withQueryString();
+        $totalSimpanan = Anggota::where('no_kta', $no_kta)->first();
+        return view('pages.simpanan', compact('anggotas', 'simpanans', 'no_kta', 'totalSimpanan'));
     }
 
     /**
@@ -42,7 +43,7 @@ class SimpananController extends Controller
     {
         try {
             if ((int)$request->deposit_wajib >= (int)$request->total) {
-                return redirect()->to('/simpanan?no_kta=' . $no_kta)->with('message', 'Duit yang diterima tidak sesuai');;
+                return redirect()->to('/simpanan?no_kta=' . $no_kta)->with('error', 'Duit yang diterima tidak sesuai');;
             }
             $latestNomorTransaksi = Simpanan::select('no_transaksi')->latest()->first();
             $dataSimpanan = new Simpanan();
@@ -112,5 +113,39 @@ class SimpananController extends Controller
     public function destroy(Simpanan $simpanan)
     {
         //
+    }
+
+    public function withdraw(Request $request)
+    {
+        try {
+
+            $anggota = Anggota::find($request->no_kta);
+
+            if ((int)$request->total >= (int)$anggota->total_simpanan) {
+                return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('error', 'Duit yang diterima tidak sesuai');;
+            }
+            $latestNomorTransaksi = Simpanan::select('no_transaksi')->latest()->first();
+            $dataSimpanan = new Simpanan();
+            if ($latestNomorTransaksi) {
+                $dataSimpanan->no_transaksi = $latestNomorTransaksi->no_transaksi + 1;
+            } else {
+                $dataSimpanan->no_transaksi = 1;
+            }
+
+            $dataSimpanan->no_kta = $request->no_kta;
+            $dataSimpanan->keterangan = $request->keterangan;
+            $dataSimpanan->tgl_deposit = Carbon::now();
+            $dataSimpanan->deposit_wajib = -$request->total;;
+            $dataSimpanan->deposit_pokok = 0;
+            $dataSimpanan->save();
+
+            $anggota->total_simpanan = (int)$anggota->total_simpanan - (int)$request->total;
+            $anggota->save();
+
+            return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('message', 'Tarik Dana Berhasil Ditambahkan');;
+        } catch (\Throwable $th) {
+            dd($th);
+            return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('error', 'Tarik Dana Gagal Ditambahkan');;
+        }
     }
 }

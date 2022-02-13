@@ -32,6 +32,7 @@ Route::middleware('auth:pengurus')->group(function () {
 
     Route::get('/simpanan', [SimpananController::class, 'index']);
     Route::post('/simpanan/add', [SimpananController::class, 'store']);
+    Route::post('/simpanan/withdraw', [SimpananController::class, 'withdraw']);
 
     Route::get('/angsuran', [AngsuranController::class, 'index_angsuran']);
     Route::post('/angsuran/add', [AngsuranController::class, 'store']);
