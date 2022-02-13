@@ -23,7 +23,7 @@ class AuthController extends Controller
             if ($checkAnggota) {
                 $user = Auth::guard('anggota')->user();
                 $id = Auth::guard('anggota')->id();
-                return redirect()->to('/home');
+                return redirect()->to('/member/home');
             } else {
                 $user = Auth::guard('pengurus')->user();
                 $id = Auth::guard('pengurus')->id();

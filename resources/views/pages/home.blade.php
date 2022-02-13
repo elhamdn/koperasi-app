@@ -1,193 +1,128 @@
-@extends('layouts.anggotaTemplate')
+@inject('Helper', 'App\Http\Helpers\Helper')
 
-@section('css')
-<style>
-    body {
-        margin: 0;
-    }
+@extends('layouts.anggota-layout')
 
-    .header-container {
-        display: flex;
-        justify-content: space-between;
-        padding: 15px;
-        background-color: white;
-    }
+@section('page-title', 'Dashboard')
 
-    .header-container li {
-        list-style-type: none;
-        margin: 0 14px;
-    }
-
-    .header-container li a {
-        color: black;
-        text-decoration: none;
-    }
-
-    .header-content {
-        display: flex;
-        flex: 2;
-        justify-content: center;
-    }
-
-    .header-logout {}
-
-    .container {
-        background-color: lightgray;
-        max-width: 100%;
-        display: flex;
-        justify-content: center;
-        min-height: calc(100vh - 50px);
-    }
-
-    main {
-        background-color: white;
-        width: 70%;
-        padding: 20px;
-    }
-
-    main section span {
-        display: block;
-        font-weight: 500;
-    }
-
-    main>h4 {
-        color: black;
-        text-decoration: underline;
-    }
-</style>
-@endsection
-
-@section('content')
-<header class="header-container">
-    <div class="header-content">
-        <li>
-            <a href="#Pinjaman">Pinjaman</a>
-        </li>
-        <li>
-            <a href="#Profile">Profile</a>
-        </li>
+@section('content-app')
+<h2 class="mt-2 mb-5">Beranda</h2>
+<div class="row">
+    <div class="col-md-6"> 
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                <div class="media d-flex">
+                    <div class="align-self-center">
+                        <i class="fa fa-money-bill-wave" style="font-size:45px"></i>
+                    </div>
+                    <div class="media-body text-right">
+                    <h3>{{$Helper->revertMoney($user->total_simpanan)}}</h3>
+                    <span>Total Simpanan</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="header-logout">
-        <li>
-            <a href="{{ url('logout') }}">Logout</a>
-        </li>
+    <div class="col-md-6"> 
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                <div class="media d-flex">
+                    <div class="align-self-center">
+                        <i class="fa fa-hand-holding-dollar" style="font-size:45px"></i>
+                    </div>
+                    <div class="media-body text-right">
+                    <h3>{{$Helper->revertMoney($user->total_pinjaman)}}</h3>
+                    <span>Total Pinjaman</span>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
-</header>
-<div class="container">
-    <main>
-        <section id="Pinjaman">
-            <h5>Pinjaman yang berlangsung</h5>
-            <table class="table">
-                <thead>
-                    <tr class="text-center">
-                        <th scope="col">Nomor Transaksi</th>
-                        <th scope="col">Status Pengajuan</th>
-                        <th scope="col">Total Pinjaman</th>
-                        <th scope="col">Tenor Cicilan</th>
-                        <th scope="col">Ket Angsuran</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pinjaman as $data)
-                    <tr class="text-center">
-                        <th class="align-middle" scope="row">{{ $data->no_transaksi }}</th>
-                        <td class="align-middle">{{ $data->status_pengajuan_pinjaman }}</td>
-                        <td class="align-middle">Rp. {{ $data->total_pinjam }}</td>
-                        <td class="align-middle">{{ $data->tenor_cicilan }} Bulan</td>
-                        <td class="align-middle">
-                            <a class="btn btn-info" href="{{ url('/home?no_transaksi_pilihan='.$data->no_transaksi) }}">
-                                Tampilkan
-                            </a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <span>Total Pinjaman : Rp. {{$user->total_pinjaman}}</span>
-            <span>Total Simpanan : Rp. {{$user->total_simpanan}}</span>
-
-            <button id="btn_ajukan" type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
-                Ajukan Pinjaman
-            </button>
-
-
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Pengajuan Peminjaman</h5>
-                            <button type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form method="post" action="{{ url('/pengajuan-pinjaman') }}" target="invisible">
-                                @csrf
-                                <input type="hidden" name="no_kta" value="{{ $user->no_kta }}">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1">Total Pinjam</label>
-                                    <input type="text" name="total_pinjam" class="form-control mr-3" id="dengan-rupiah" placeholder="0" max="10">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">5 History Angsuran</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        @foreach ($angsuran as $data)
+                            <div class="col-md-6">
+                                <div class="list-group mb-2">
+                                    <span class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">No. Transaksi Pinjaman : {{$data->no_transaksi_pinjaman}}</h5>
+                                            <small class="text-right">{{$data->tgl_angsuran}}</small>
+                                        </div>
+                                        <table class="mb-1">
+                                            <tr>
+                                                <td>Biaya Cicilan</td>
+                                                <td>:</td>
+                                                <td>{{$Helper->revertMoney($data->biaya_cicilan)}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Biaya Cicilan</td>
+                                                <td>:</td>
+                                                <td>{{$Helper->revertMoney($data->biaya_bunga)}}</td>
+                                            </tr>
+                                        </table>
+                                    </span>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput2">Tenor Cicilan</label>
-                                    <input type="number" name="tenor_cicilan" class="form-control" id="exampleFormControlInput2" placeholder="0" min="0" max="100">
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Keterangan Peminjaman</label>
-                                    <textarea class="form-control" name="keterangan" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Save changes</button>
-                            </form>
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        </section>
-
-        @if ($no_transaksi_pilihan)
-        <hr>
-        <section>
-            <h5>Angsuran </h5>
-            @if ($isSudahLunas)
-            <b class="text-success">Pinjaman Sudah Lunas</b>
-            @endif
-            <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap datatable">
-                    <thead>
-                        <tr class="text-center">
-                            <th scope="row">Nomor transaksi</th>
-                            <th>Tanggal Angsuran</th>
-                            <th>Biaya Cicilan</th>
-                            <th>Biaya Bunga</th>
-                            <th>Total Angsuran</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($angsurans as $data)
-                        <tr class="text-center">
-                            <th class="align-middle" scope="row">{{ $data->no_transaksi }}</th>
-                            <td class="align-middle"> {{ $data->tgl_angsuran}}</td>
-                            <td class="align-middle">Rp. {{ $data->biaya_cicilan }}</td>
-                            <td class="align-middle">Rp. {{ $data->biaya_bunga }}</td>
-                            <td class="align-middle">Rp. {{ $data->total_tagihan }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">5 History Simpanan</h4>
             </div>
-        </section>
-        @endif
-        <hr>
-        <section id="Profile">
-            <h5>Biodata</h5>
-            data diri sendiri
-        </section>
-    </main>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="row">
+                        @foreach ($simpanan as $data)
+                            <div class="col-md-6">
+                                <div class="list-group mb-2">
+                                    <span class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">No. Transaksi : {{$data->no_transaksi}}</h5>
+                                            <small class="text-right">{{$data->tgl_deposit}}</small>
+                                        </div>
+                                        <table class="mb-1">
+                                            <tr>
+                                                <td>Deposit Pokok</td>
+                                                <td>:</td>
+                                                <td>{{$Helper->revertMoney($data->deposit_pokok)}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Deposit Wajib</td>
+                                                <td>:</td>
+                                                <td>{{$Helper->revertMoney($data->deposit_wajib)}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Keterangan</td>
+                                                <td>:</td>
+                                                <td>{{$data->keterangan}}</td>
+                                            </tr>
+                                        </table>
+                                    </span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-@endsection
+
+@endsection()
 
 @section('js')
 <script>
@@ -223,7 +158,6 @@
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
     })
-
 </script>
 
 @endsection

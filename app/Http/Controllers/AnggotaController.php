@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anggota;
 use App\Models\Pinjaman;
 use App\Models\Angsuran;
+use App\Models\Simpanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -146,5 +147,112 @@ class AnggotaController extends Controller
     public function destroy(Anggota $anggota)
     {
         //
+    }
+
+    public function indexMember(Request $request)
+    {
+        $user = Auth::guard('anggota')->user();
+        $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->get();
+
+        $angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('tgl_angsuran')->limit(5)->get();
+        $simpanan = Simpanan::where('no_kta', $user->no_kta)->latest('tgl_deposit')->limit(5)->get();
+
+        try {
+            $pinjamanPilihan = Pinjaman::select('tenor_cicilan')->where('no_transaksi', $request->no_transaksi_pilihan)->first();
+            $tenor_cicilan = $pinjamanPilihan->tenor_cicilan ? $pinjamanPilihan->tenor_cicilan : 0;
+            $isSudahLunas = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pilihan)->count() == $tenor_cicilan ? true : false;
+            $no_transaksi_pilihan = $request->no_transaksi_pilihan;
+            $angsurans = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pilihan)->get();
+        } catch (\Throwable $th) {
+            $isSudahLunas = false;
+            $no_transaksi_pilihan = 0;
+            $angsurans = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pilihan)->get();
+        }
+        return view('pages.home', compact('isSudahLunas', 'user', 'pinjaman', 'angsurans', 'no_transaksi_pilihan', 'angsuran', 'simpanan'));
+    }
+
+    public function pinjamanMember(Request $request)
+    {
+        $user = Auth::guard('anggota')->user();
+
+        try {
+            $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->latest('created_at')->paginate(2)->withQueryString();
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+        return view('pages.member-pinjaman', compact('pinjaman', 'user'));
+    }
+
+    public function simpananMember(Request $request)
+    {
+        $user = Auth::guard('anggota')->user();
+
+        try {
+            $simpanan = Simpanan::where('no_kta', $user->no_kta)->latest('created_at')->paginate(2)->withQueryString();
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+        return view('pages.member-simpanan', compact('simpanan', 'user'));
+    }
+
+    public function angsuranMember(Request $request)
+    {
+        $user = Auth::guard('anggota')->user();
+
+        try {
+            $angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('created_at')->paginate(2)->withQueryString();
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+        return view('pages.member-angsuran', compact('angsuran', 'user'));
+    }
+
+    public function profileMember(Request $request)
+    {
+        $user = Auth::guard('anggota')->user();
+        return view('pages.member-profile', compact('user'));
+    }
+
+    public function ubahProfileMember(Request $request)
+    {
+        try {
+            $user = Auth::guard('anggota')->user();
+
+            $anggota = Anggota::find($user->no_kta);
+
+            $anggota->email = $request->email;
+            $anggota->jenis_kelamin = $request->jenis_kelamin;
+            $anggota->nama_anggota = $request->nama_anggota;
+            $anggota->alamat_anggota = $request->alamat_anggota;
+            $anggota->nomor_hp = $request->nomor_hp;
+            $anggota->save();
+
+            return redirect()->to('/member/profile')->with('message', 'Data Berhasil Terubah');;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->to('/member/profile')->with('error', 'Data gagal Terubah');;
+        }
+    }
+
+    public function ubahPasswordMember(Request $request)
+    {
+        try {
+            $user = Auth::guard('anggota')->user();
+
+            if(Hash::check($request->password_lama, $user->password)){
+                $anggota = Anggota::find($user->no_kta);
+
+                $anggota->password = Hash::make($request->password_baru);
+                $anggota->save();
+                return redirect()->to('/member/profile')->with('message', 'Password Berhasil Terubah');
+            }
+
+            return redirect()->to('/member/profile')->with('error', 'Password Lama Tidak Sesuai');
+
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->to('/member/profile')->with('error', 'Password gagal Terubah');;
+        }
     }
 }

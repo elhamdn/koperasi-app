@@ -39,12 +39,12 @@
                     <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
                 </form>
                 @if (Session::has('success'))
-                <div class="alert alert-success">
+                <div class="alert alert-success mt-3">
                     {{ Session::get('success') }}
                 </div>
                 @endif
                 @if (Session::has('error'))
-                <div class="alert alert-danger">
+                <div class="alert alert-danger mt-3">
                     {{ Session::get('error') }}
                 </div>
                 @endif

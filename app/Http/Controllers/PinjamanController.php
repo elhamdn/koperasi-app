@@ -6,6 +6,8 @@ use App\Models\Pinjaman;
 use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use DB;
 
@@ -80,6 +82,7 @@ class PinjamanController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::guard('anggota')->user();
         try {
             $latestNomorTransaksi = Pinjaman::select('no_transaksi')->latest()->first();
             $dataPinjaman = new Pinjaman;
@@ -88,7 +91,7 @@ class PinjamanController extends Controller
             } else {
                 $dataPinjaman->no_transaksi = 1;
             }
-            $dataPinjaman->no_kta = $request->no_kta;
+            $dataPinjaman->no_kta = $user->no_kta;
             $dataPinjaman->tenor_cicilan = $request->tenor_cicilan;
             $dataPinjaman->keterangan = $request->keterangan;
             $dataPinjaman->total_pinjam = str_replace(".", "", $request->total_pinjam);
@@ -96,10 +99,10 @@ class PinjamanController extends Controller
             $dataPinjaman->bunga = 0;
             $dataPinjaman->status_pengajuan_pinjaman = 'pending';
             $dataPinjaman->save();
-            return redirect()->to('/home')->with('message', 'Data Berhasil Ditambahkan');;
+            return redirect()->to('/member/pinjaman')->with('message', 'Data Berhasil Ditambahkan');;
         } catch (\Throwable $th) {
             dd($th);
-            return redirect()->to('/home')->with('error', 'Data Gagal Ditambahkan');;
+            return redirect()->to('/member/pinjaman')->with('error', 'Data Gagal Ditambahkan');;
         }
     }
 
