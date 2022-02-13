@@ -71,17 +71,18 @@ class AnggotaController extends Controller
             $anggota->email = $request->email;
             $anggota->jenis_kelamin = $request->jenis_kelamin;
             $anggota->nama_anggota = $request->nama_anggota;
-            $anggota->alamat_anggota = $request->alamat_anggota;
+            $anggota->alamat_anggota = "'".$request->alamat_anggota."'";
             $anggota->nomor_hp = $request->nomor_hp;
             $anggota->password = Hash::make($request->password);
             $anggota->total_pinjaman = 0;
             $anggota->total_simpanan = 0;
+
             $anggota->save();
 
             return redirect()->to('/master/anggota')->with('message', 'Data Berhasil');;
         } catch (\Throwable $th) {
             //throw $th;
-            // dd($th);
+            dd($th);
             return redirect()->to('/master/anggota')->with('error', 'Data gagal diapprove');;
         }
     }

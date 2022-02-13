@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 use DB;
 
+use Carbon\Carbon;
+
 use App\Http\Helpers\Helper;
 
 class PengurusController extends Controller
@@ -105,7 +107,7 @@ class PengurusController extends Controller
             return redirect()->to('/master/pengurus')->with('message', 'Data Berhasil');;
         } catch (\Throwable $th) {
             //throw $th;
-
+            dd($th);
             return redirect()->to('/master/pengurus')->with('error', 'Data gagal diapprove');;
         }
     }
@@ -141,8 +143,8 @@ class PengurusController extends Controller
         $totalPinjaman = Helper::revertMoney($totalPinjaman);
         $totalSimpanan = Helper::revertMoney($totalSimpanan);
 
-        $simpanan = DB::table('simpanans')->join('anggotas','anggotas.no_kta','simpanans.no_kta')->latest('tgl_deposit')->limit(5)->get();
-        $angsuran = DB::table('angsurans')->join('anggotas','anggotas.no_kta','angsurans.no_kta')->latest('tgl_angsuran')->limit(5)->get();
+        $simpanan = DB::table('simpanans')->join('anggotas','anggotas.no_kta','simpanans.no_kta')->whereDate('simpanans.created_at', Carbon::today())->limit(5)->get();
+        $angsuran = DB::table('angsurans')->join('anggotas','anggotas.no_kta','angsurans.no_kta')->whereDate('angsurans.created_at', Carbon::today())->limit(5)->get();
 
         $grafikAngsuran = DB::select(DB::raw("select count(*) as totalMothly, sum(biaya_bunga)+sum(biaya_cicilan) as total_biaya, MONTH(tgl_angsuran) as bulan from angsurans group by month(tgl_angsuran) limit 6;"));
         $grafikSimpanan = DB::select(DB::raw("select count(*) as totalMothly, sum(deposit_pokok)+sum(deposit_wajib) as total_biaya, MONTH(tgl_deposit) as bulan from simpanans group by month(tgl_deposit) limit 6;"));

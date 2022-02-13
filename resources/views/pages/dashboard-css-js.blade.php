@@ -13,8 +13,6 @@
             const dataGrafikSimpanan = {!! json_encode($grafikSimpanan) !!}
             const dataGrafikAngsuran = {!! json_encode($grafikAngsuran) !!}
 
-            console.log(setConfigChart(dataGrafikSimpanan))
-
             const configSimpanan = {
                 type: 'bar',
                 data: setConfigChart(dataGrafikSimpanan, 'Simpanan', '30, 255, 180'),
