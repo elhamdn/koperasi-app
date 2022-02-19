@@ -138,10 +138,10 @@ class PengurusController extends Controller
     public function dashboard()
     {
         $totalAnggota = Anggota::count();
-        $totalSimpanan = DB::table('anggotas')->sum('total_simpanan');
-        $totalPinjaman = DB::table('anggotas')->sum('total_pinjaman');
-        $totalPinjaman = Helper::revertMoney($totalPinjaman);
-        $totalSimpanan = Helper::revertMoney($totalSimpanan);
+        $totalSimpanan = DB::select(DB::raw("SELECT SUM(total_simpanan) as simpanan FROM anggotas"));
+        $totalPinjaman = DB::select(DB::raw("SELECT SUM(total_pinjaman) as total_pinjam FROM anggotas"));
+        $totalPinjaman = Helper::revertMoney($totalPinjaman[0]->total_pinjam);
+        $totalSimpanan = Helper::revertMoney($totalSimpanan[0]->simpanan);
 
         $simpanan = DB::table('simpanans')->join('anggotas','anggotas.no_kta','simpanans.no_kta')->whereDate('simpanans.created_at', Carbon::today())->limit(5)->get();
         $angsuran = DB::table('angsurans')->join('anggotas','anggotas.no_kta','angsurans.no_kta')->whereDate('angsurans.created_at', Carbon::today())->limit(5)->get();
