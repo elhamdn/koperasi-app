@@ -58,7 +58,7 @@ class AuthController extends Controller
             if (auth()->guard('anggota')->check()) {
                 $id = Auth::id();
                 $user = Auth::user();
-                return redirect()->to('/home');
+                return redirect()->to('/member/home');
             } else {
                 Session::flash('error', 'email atau Password Salah ');
                 return redirect()->route('login');

@@ -101,18 +101,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label>No. KTA: </label>
-                                                    <div class="form-group">
-                                                        <div class="form-control">{{ $user->no_kta }}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Nama Anggota: </label>
-                                                    <div class="form-group">
-                                                        <div class="form-control">{{ $user->nama_anggota }}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
                                                     <label>Tgl Pengajuan: </label>
                                                     <div class="form-group">
                                                         <div class="form-control">{{ $data->created_at }}</div>
@@ -134,6 +122,18 @@
                                                     <label>Bunga Cicilan: </label>
                                                     <div class="form-group">
                                                         <div class="form-control">{{ $data->bunga }}%</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Sisa Cicilan: </label>
+                                                    <div class="form-group">
+                                                        <div class="form-control">
+                                                        @foreach($angsuran as $a)
+                                                        @if($a->no_transaksi_pinjaman == $data->no_transaksi)
+                                                            {{$data->tenor_cicilan - $a->total}} Bulan
+                                                        @endif
+                                                        @endforeach
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -159,6 +159,35 @@
                                                     <div class="form-group">
                                                         <div class="form-control" style="min-height: 120px;white-space: initial">{{ $data->alasan_approval }}</div>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Angsuran: </label>
+                                                    <table class="table table-hover text-center" style="font-size: 10px">
+                                                        <thead>
+                                                            <tr>
+                                                                <td scope="col">No.</td>
+                                                                <td scope="col">Bunga</td>
+                                                                <td scope="col">Cicilan</td>
+                                                                <td scope="col">Total</td>
+                                                                <td scope="col">Tanggal</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @php $i = 1 @endphp
+                                                        @foreach($list_angsuran as $a)
+                                                        @if($a->no_transaksi_pinjaman == $data->no_transaksi)
+                                                            <tr>
+                                                                <td scope="row">{{$i}}</td>
+                                                                <td>{{$a->biaya_bunga}}</td>
+                                                                <td>{{$a->biaya_cicilan}}</td>
+                                                                <td>{{$a->biaya_bunga+$a->biaya_cicilan}}</td>
+                                                                <td>{{$a->tgl_angsuran}}</td>
+                                                            </tr>
+                                                            @php $i++ @endphp
+                                                        @endif
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>

@@ -55,7 +55,7 @@ Route::middleware('auth:anggota')->group(function () {
         Route::get('/home', [AnggotaController::class, 'indexMember']);
         Route::get('/pinjaman', [AnggotaController::class, 'pinjamanMember']);
         Route::get('/simpanan', [AnggotaController::class, 'simpananMember']);
-        Route::get('/angsuran', [AnggotaController::class, 'angsuranMember']);
+        // Route::get('/angsuran', [AnggotaController::class, 'angsuranMember']);
         Route::get('/profile', [AnggotaController::class, 'profileMember']);
         Route::post('/ubah_profile', [AnggotaController::class, 'ubahProfileMember']);
         Route::post('/ubah_password', [AnggotaController::class, 'ubahPasswordMember']);

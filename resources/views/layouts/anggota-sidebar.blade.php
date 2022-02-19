@@ -36,12 +36,12 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a href="{{ url('member/angsuran') }}" class="sidebar-link">
                         <i class="bi bi-file-text-fill"></i>
                         <span>Angsuran</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="sidebar-item ">
                     <a href="{{ url('logout') }}" class="sidebar-link">

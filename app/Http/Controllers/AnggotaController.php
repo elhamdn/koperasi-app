@@ -181,10 +181,11 @@ class AnggotaController extends Controller
 
             $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->latest('created_at')->paginate(5)->withQueryString();
             $angsuran = DB::select(DB::raw("select count(*) as total, no_transaksi_pinjaman from angsurans WHERE no_kta = '".$user->no_kta."' group by no_transaksi_pinjaman;"));
+            $list_angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('created_at')->get();
         } catch (\Throwable $th) {
             dd($th);
         }
-        return view('pages.member-pinjaman', compact('pinjaman', 'user', 'angsuran'));
+        return view('pages.member-pinjaman', compact('pinjaman', 'user', 'angsuran', 'list_angsuran'));
     }
 
     public function simpananMember(Request $request)
