@@ -140,8 +140,8 @@ class PengurusController extends Controller
         $totalAnggota = Anggota::count();
         $totalSimpanan = DB::select(DB::raw("SELECT SUM(total_simpanan::decimal) as simpanan FROM anggotas"));
         $totalPinjaman = DB::select(DB::raw("SELECT SUM(total_pinjaman::decimal) as total_pinjam FROM anggotas"));
-        $totalPinjaman = Helper::revertMoney($totalPinjaman[0]->total_pinjam);
-        $totalSimpanan = Helper::revertMoney($totalSimpanan[0]->simpanan);
+        $totalPinjaman = (new Helper)->revertMoney($totalPinjaman[0]->total_pinjam);
+        $totalSimpanan = (new Helper)->revertMoney($totalSimpanan[0]->simpanan);
 
         $simpanan = DB::table('simpanans')->join('anggotas','anggotas.no_kta','simpanans.no_kta')->whereDate('simpanans.created_at', Carbon::today())->limit(5)->get();
         $angsuran = DB::table('angsurans')->join('anggotas','anggotas.no_kta','angsurans.no_kta')->whereDate('angsurans.created_at', Carbon::today())->limit(5)->get();
