@@ -11,7 +11,7 @@
         <div class="row mb-3">
             <div class="col-md-2">
                 <div class="form-group">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:5px; pading-bottom:5px">
+                    <button class="btn btn-secondary text-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:5px; pading-bottom:5px">
                         Pilih Anggota
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -59,7 +59,7 @@
                             <td class="align-middle">{{ $data->tenor_cicilan }} Bulan</td>
 
                             <td class="align-middle">
-                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:5px; pading-bottom:5px">
+                                <button class="btn btn-secondary text-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:5px; pading-bottom:5px">
                                     <i class="fa fa-gear"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -193,7 +193,7 @@
                                                     </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-success">Save changes</button>
                                                 </form>
                                             </div>
@@ -220,7 +220,7 @@
                                                     </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-success">Save changes</button>
                                                 </form>
                                             </div>

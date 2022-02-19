@@ -12,15 +12,15 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 @if (\Session::has('error'))
-                    <div class="alert alert-light-danger color-danger"><i class="bi bi-exclamation-circle mr-2"></i> {!! \Session::get('error') !!}</div>
+                    <div class="alert alert-light-danger color-danger"><i class="fas fa-circle-exclamation mr-2"></i> {!! \Session::get('error') !!}</div>
                 @endif
                 @if (\Session::has('message'))
-                    <div class="alert alert-light-success color-success"><i class="bi bi-check-circle mr-2"></i> {!! \Session::get('message') !!}</div>
+                    <div class="alert alert-light-success color-success"><i class="fas fa-check mr-2"></i> {!! \Session::get('message') !!}</div>
                 @endif
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary text-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Pilih Anggota
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -62,7 +62,7 @@
                                 </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success">Submit</button>
                             </form>
                         </div>
@@ -99,7 +99,7 @@
                                 </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success">Submit</button>
                             </form>
                         </div>

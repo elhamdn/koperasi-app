@@ -117,10 +117,10 @@ p {
                 <p>{{$user->no_kta}}</p> 
 
                 @if (\Session::has('error'))
-                    <div class="alert alert-light-danger color-danger"><i class="bi bi-exclamation-circle mr-2"></i> {!! \Session::get('error') !!}</div>
+                    <div class="alert alert-light-danger color-danger"><i class="fas fa-circle-exclamation mr-2"></i> {!! \Session::get('error') !!}</div>
                 @endif
                 @if (\Session::has('message'))
-                    <div class="alert alert-light-success color-success"><i class="bi bi-check-circle mr-2"></i> {!! \Session::get('message') !!}</div>
+                    <div class="alert alert-light-success color-success"><i class="fas fa-check mr-2"></i> {!! \Session::get('message') !!}</div>
                 @endif
 
                 <button class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded" data-toggle="modal" data-target="#modalUbahData">Ubah Data</button>
@@ -156,7 +156,7 @@ p {
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success">Submit</button>
                                 </form>
                             </div>
@@ -185,7 +185,7 @@ p {
                                     </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success">Submit</button>
                                 </form>
                             </div>

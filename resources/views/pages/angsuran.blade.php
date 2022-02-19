@@ -11,7 +11,7 @@
         <div class="row mb-3">
             <div class="col-md-2">
                 <div class="form-group">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary text-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Pilih Anggota
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary text-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Pilih Pinjaman
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -112,7 +112,7 @@
                                 <input type="hidden" name="biaya_bunga" value="{{ $Bungaperbulan }}">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary text-dark" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success">Submit</button>
                             </form>
                         </div>
