@@ -18,7 +18,7 @@
                         <span class="invalid-feedback">{{ $errors->first('email') }}</span>
                         @endif
                         <div class="form-control-icon">
-                            <i class="bi bi-person"></i>
+                            <i class="fas fa-user"></i>
                         </div>
                     </div>
                     <div class="form-group position-relative has-icon-left mb-4">
@@ -27,7 +27,7 @@
                         <span class="invalid-feedback">{{ $errors->first('password') }}</span>
                         @endif
                         <div class="form-control-icon">
-                            <i class="bi bi-shield-lock"></i>
+                            <i class="fas fa-lock"></i>
                         </div>
                     </div>
                     <div class="form-check form-check-lg d-flex align-items-end" style="margin-left: 5px">
