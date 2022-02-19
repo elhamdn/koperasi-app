@@ -121,7 +121,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="post" action="{{ url('/pengajuan-pinjaman') }}" target="invisible">
-                                @csrf
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="no_kta" value="{{ $user->no_kta }}">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Total Pinjam</label>

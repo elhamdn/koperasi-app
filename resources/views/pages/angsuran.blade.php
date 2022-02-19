@@ -67,7 +67,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="post" action="{{ url('/angsuran/add') }}" target="invisible">
-                                @csrf
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <table>
                                     <tr>
                                         <td><span>Tagihan Cicilan</span></td>

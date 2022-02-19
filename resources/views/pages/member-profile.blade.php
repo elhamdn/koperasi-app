@@ -133,7 +133,7 @@ p {
                             </div>
                             <div class="modal-body">
                                 <form method="post" action="{{ url('/member/ubah_profile') }}">
-                                    @csrf
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
                                         <input type="email" value="{{$user->email}}"  name="email" class="form-control" id="exampleInputEmail1" min="0" required placeholder="Email">
@@ -174,7 +174,7 @@ p {
                             </div>
                             <div class="modal-body">
                                 <form method="post" action="{{ url('/member/ubah_password') }}">
-                                    @csrf
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Password Lama</label>
                                         <input type="password" name="password_lama" class="form-control" id="exampleInputEmail1" min="0" required placeholder="Password Lama">

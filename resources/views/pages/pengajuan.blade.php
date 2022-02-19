@@ -179,7 +179,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form method="post" action="{{ url('/pengajuan/approve') }}" target="invisible">
-                                                    @csrf
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                                     <input type="hidden" name="no_transaksi" value="{{ $data->no_transaksi }}">
                                                     <div class="form-group">
@@ -210,7 +210,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form method="post" action="{{ url('/pengajuan/reject') }}" target="invisible">
-                                                    @csrf
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                                     <input type="hidden" name="no_transaksi" value="{{ $data->no_transaksi }}">
                                                     <div class="form-group">

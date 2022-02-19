@@ -50,7 +50,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="post" action="{{ url('/simpanan/withdraw') }}">
-                                @csrf
+                                @<input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Jumlah Uang</label>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="post" action="{{ url('/simpanan/add') }}">
-                                @csrf
+                                @<input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Deposit Wajib</label>

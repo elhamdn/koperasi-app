@@ -22,7 +22,7 @@
                         </div>
                         <div class="modal-body">
                             <form method="post" action="{{ url('/member/pengajuan-pinjaman') }}">
-                                @csrf
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Jumlah Uang</label>
                                     <input type="number" name="total_pinjam" class="form-control" id="exampleInputEmail1" min="0" required placeholder="Jumlah Uang">

@@ -11,7 +11,7 @@
                 <h2 class="text-center text-secondary">Koperasi App</h2>
                 <h3 class="text-center text-dark mb-5">Log in</h3>
                 <form method="post" action="{{ route('login') }}">
-                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group position-relative has-icon-left mb-4">
                         <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus placeholder="Email">
                         @if ($errors->has('email'))

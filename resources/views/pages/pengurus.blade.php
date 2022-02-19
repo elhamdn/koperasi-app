@@ -24,7 +24,7 @@
                             <span data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                         </div>
                         <form method="post" action="{{ url('/pengurus/add') }}" target="invisible">
-                            @csrf
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="modal-body text-left">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -128,7 +128,7 @@
                                                 <span data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                                             </div>
                                             <form method="post" action="{{ url('/pengurus/edit') }}" target="invisible">
-                                                @csrf
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <div class="modal-body text-left">
                                                     <div class="row">
                                                         <div class="col-md-6">
