@@ -139,26 +139,26 @@ class PengurusController extends Controller
     {
         $totalAnggota = Anggota::count();
         
-        // $totalSimpanan = Anggota::sum('total_simpanan');
-        // $totalPinjaman = Anggota::sum('total_pinjaman');
-        // $totalPinjaman = Helper::revertMoney($totalPinjaman);
-        // $totalSimpanan = Helper::revertMoney($totalSimpanan);
+        $totalSimpanan = Anggota::sum('total_simpanan');
+        $totalPinjaman = Anggota::sum('total_pinjaman');
+        $totalPinjaman = Helper::revertMoney($totalPinjaman);
+        $totalSimpanan = Helper::revertMoney($totalSimpanan);
 
         // postgre
-        $totalSimpanan = DB::select(DB::raw("SELECT SUM(total_simpanan::decimal) as simpanan FROM anggotas"));
-        $totalPinjaman = DB::select(DB::raw("SELECT SUM(total_pinjaman::decimal) as total_pinjam FROM anggotas"));
-        $totalPinjaman = (new Helper)->revertMoney($totalPinjaman[0]->total_pinjam);
-        $totalSimpanan = (new Helper)->revertMoney($totalSimpanan[0]->simpanan);
+        // $totalSimpanan = DB::select(DB::raw("SELECT SUM(total_simpanan::decimal) as simpanan FROM anggotas"));
+        // $totalPinjaman = DB::select(DB::raw("SELECT SUM(total_pinjaman::decimal) as total_pinjam FROM anggotas"));
+        // $totalPinjaman = (new Helper)->revertMoney($totalPinjaman[0]->total_pinjam);
+        // $totalSimpanan = (new Helper)->revertMoney($totalSimpanan[0]->simpanan);
 
         $simpanan = DB::table('simpanans')->join('anggotas','anggotas.no_kta','simpanans.no_kta')->whereDate('simpanans.created_at', Carbon::today())->limit(5)->get();
         $angsuran = DB::table('angsurans')->join('anggotas','anggotas.no_kta','angsurans.no_kta')->whereDate('angsurans.created_at', Carbon::today())->limit(5)->get();
 
-        // $grafikAngsuran = DB::select(DB::raw("select count(*) as totalMothly, sum(biaya_bunga)+sum(biaya_cicilan) as total_biaya, MONTH(tgl_angsuran) as bulan from angsurans group by month(tgl_angsuran) limit 6;"));
-        // $grafikSimpanan = DB::select(DB::raw("select count(*) as totalMothly, sum(deposit_pokok)+sum(deposit_wajib) as total_biaya, MONTH(tgl_deposit) as bulan from simpanans group by month(tgl_deposit) limit 6;"));
+        $grafikAngsuran = DB::select(DB::raw("select count(*) as totalMothly, sum(biaya_bunga)+sum(biaya_cicilan) as total_biaya, MONTH(tgl_angsuran) as bulan from angsurans group by month(tgl_angsuran) limit 6;"));
+        $grafikSimpanan = DB::select(DB::raw("select count(*) as totalMothly, sum(deposit_pokok)+sum(deposit_wajib) as total_biaya, MONTH(tgl_deposit) as bulan from simpanans group by month(tgl_deposit) limit 6;"));
 
         // postgre
-        $grafikAngsuran = DB::select(DB::raw("select count(*) as totalMothly, sum(biaya_bunga::decimal)+sum(biaya_cicilan::decimal) as total_biaya, MONTH(tgl_angsuran) as bulan from angsurans group by month(tgl_angsuran) limit 6;"));
-        $grafikSimpanan = DB::select(DB::raw("select count(*) as totalMothly, sum(deposit_pokok::decimal)+sum(deposit_wajib::decimal) as total_biaya, MONTH(tgl_deposit) as bulan from simpanans group by month(tgl_deposit) limit 6;"));
+        // $grafikAngsuran = DB::select(DB::raw("select count(*) as totalMothly, sum(biaya_bunga::decimal)+sum(biaya_cicilan::decimal) as total_biaya, MONTH(tgl_angsuran) as bulan from angsurans group by month(tgl_angsuran) limit 6;"));
+        // $grafikSimpanan = DB::select(DB::raw("select count(*) as totalMothly, sum(deposit_pokok::decimal)+sum(deposit_wajib::decimal) as total_biaya, MONTH(tgl_deposit) as bulan from simpanans group by month(tgl_deposit) limit 6;"));
 
         return view('pages.dashboard', compact('totalAnggota', 'totalSimpanan', 'totalPinjaman', 'angsuran', 'simpanan', 'grafikSimpanan', 'grafikAngsuran'));
     }
