@@ -40,6 +40,7 @@
             },
             paging: true,
             ajax: "/get_simpanan",
+            "ordering": false,
             columns: [{
                     data: "no_transaksi",
                 },

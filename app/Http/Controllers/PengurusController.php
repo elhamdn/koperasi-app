@@ -38,9 +38,9 @@ class PengurusController extends Controller
 
     public function get_simpanan()
     {
-        $simpanan = Simpanan::all();
+        $simpanan = new Simpanan;
 
-        return DataTables::of($simpanan)->make(true);
+        return DataTables::of($simpanan->orderBy('updated_at', 'asc')->get())->make(true);
     }
 
     /**
