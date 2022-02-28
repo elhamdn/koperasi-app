@@ -16402,7 +16402,7 @@ a.tag-addon:hover {
   position: absolute;
   right: 0;
   bottom: 5px;
-  content: "\e92d";
+  /* content: "\e92d"; */
   font-family: 'feather' !important;
 }
 
@@ -16410,7 +16410,7 @@ a.tag-addon:hover {
   position: absolute;
   right: 0;
   top: 5px;
-  content: "\e930";
+  /* content: "\e930"; */
   font-family: 'feather' !important;
 }
 
@@ -16422,7 +16422,7 @@ a.tag-addon:hover {
   position: absolute;
   right: 0;
   bottom: 5px;
-  content: "\e92d";
+  /* content: "\e92d"; */
   font-family: 'feather' !important;
 }
 
@@ -16434,7 +16434,7 @@ a.tag-addon:hover {
   position: absolute;
   right: 0;
   top: 5px;
-  content: "\e930";
+  /* content: "\e930"; */
   font-family: 'feather' !important;
 }
 

@@ -3,7 +3,7 @@
         <div class="sidebar-header">
             <div class="d-flex justify-content-between">
                 <div class="logo w-100 text-center">
-                    <a href="{{ url('dashboard') }}"><img src="https://kopmafeuii.com/wp-content/uploads/2017/06/LAMBANG-KOPERASI.png" alt="Logo" srcset="" style="object-fit: contain; width: 100px;height:100px"></a>
+                    <a href="{{ url('dashboard') }}"><img src="https://www.gurupendidikan.co.id/wp-content/uploads/2020/04/Lambang-Koperasi-Baru.png" alt="Logo" srcset="" style="object-fit: contain; width: 150px;height:150px"></a>
                 </div>
                 <div class="toggler">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="fas fa-bars text-white"></i></a>
@@ -44,6 +44,33 @@
                 <li class="sidebar-item  has-sub">
                     <a class="sidebar-link">
                         <i class="fas fa-layer-group"></i>
+                        <span>Rekap Data</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="{{ url('master/rekap/pinjaman') }}">
+                                <i class="fas fa-users"></i>
+                                <span>Pinjaman</span>
+                            </a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ url('master/rekap/angsuran') }}">
+                                <i class="fas fa-id-card"></i>
+                                <span>Angsuran</span>
+                            </a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ url('master/rekap/simpanan') }}">
+                                <i class="fas fa-id-card"></i>
+                                <span>Simpanan</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item  has-sub">
+                    <a class="sidebar-link">
+                        <i class="fas fa-layer-group"></i>
                         <span>Master</span>
                     </a>
                     <ul class="submenu ">
@@ -57,12 +84,6 @@
                             <a href="{{ url('master/pengurus') }}">
                                 <i class="fas fa-id-card"></i>
                                 <span>Pengurus</span>
-                            </a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="{{ url('master/rekap') }}">
-                                <i class="fas fa-id-card"></i>
-                                <span>Rekap Data</span>
                             </a>
                         </li>
                     </ul>

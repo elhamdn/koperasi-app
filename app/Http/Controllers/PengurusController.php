@@ -30,17 +30,40 @@ class PengurusController extends Controller
         return view('pages.pengurus', compact('penguruses'));
     }
 
-    public function rekap()
+    public function rekap_simpanan()
     {
-
         return view('pages.rekap');
+    }
+
+    public function rekap_pinjaman()
+    {
+        return view('pages.rekap-pinjaman');
     }
 
     public function get_simpanan()
     {
-        $simpanan = new Simpanan;
+        $simpanan = Simpanan::join('anggotas', 'anggotas.no_kta', '=', 'simpanans.no_kta');
 
-        return DataTables::of($simpanan->orderBy('updated_at', 'asc')->get())->make(true);
+        return DataTables::of($simpanan->orderBy('simpanans.updated_at', 'asc')->get())->make(true);
+    }
+
+    public function rekap_angsuran()
+    {
+        return view('pages.rekap-angsuran');
+    }
+
+    public function get_pinjaman()
+    {
+        $Pinjaman = Pinjaman::join('anggotas', 'anggotas.no_kta', '=', 'pinjamen.no_kta');
+
+        return DataTables::of($Pinjaman->orderBy('pinjamen.updated_at', 'asc')->get())->make(true);
+    }
+
+    public function get_angsuran()
+    {
+        $data = Angsuran::join('anggotas', 'anggotas.no_kta', '=', 'angsurans.no_kta');
+
+        return DataTables::of($data->orderBy('angsurans.updated_at', 'asc')->get())->make(true);
     }
 
     /**

@@ -29,8 +29,12 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:pengurus')->group(function () {
     Route::get('/dashboard', [PengurusController::class, 'dashboard']);
-    Route::get('/master/rekap', [PengurusController::class, 'rekap']);
+    Route::get('/master/rekap/pinjaman', [PengurusController::class, 'rekap_pinjaman']);
+    Route::get('/master/rekap/simpanan', [PengurusController::class, 'rekap_simpanan']);
+    Route::get('/master/rekap/angsuran', [PengurusController::class, 'rekap_angsuran']);
     Route::get('get_simpanan', [PengurusController::class, 'get_simpanan'])->name('get_simpanan');
+    Route::get('get_pinjaman', [PengurusController::class, 'get_pinjaman'])->name('get_pinjaman');
+    Route::get('get_angsuran', [PengurusController::class, 'get_angsuran'])->name('get_angsuran');
 
     Route::get('/simpanan', [SimpananController::class, 'index']);
     Route::post('/simpanan/add', [SimpananController::class, 'store']);
