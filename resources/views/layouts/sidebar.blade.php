@@ -12,7 +12,7 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                
+
                 <li class="sidebar-item">
                     <a href="{{ url('dashboard') }}" class="sidebar-link">
                         <i class="fas fa-house"></i>
@@ -29,7 +29,7 @@
 
                 <li class="sidebar-item">
                     <a href="{{ url('simpanan') }}" class="sidebar-link">
-                    <i class="fas fa-piggy-bank"></i>
+                        <i class="fas fa-piggy-bank"></i>
                         <span>Simpanan</span>
                     </a>
                 </li>
@@ -40,7 +40,7 @@
                         <span>Angsuran</span>
                     </a>
                 </li>
-                
+
                 <li class="sidebar-item  has-sub">
                     <a class="sidebar-link">
                         <i class="fas fa-layer-group"></i>
@@ -59,6 +59,12 @@
                                 <span>Pengurus</span>
                             </a>
                         </li>
+                        <li class="submenu-item ">
+                            <a href="{{ url('master/rekap') }}">
+                                <i class="fas fa-id-card"></i>
+                                <span>Rekap Data</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -68,7 +74,7 @@
                         <span>Keluar</span>
                     </a>
                 </li>
-                
+
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>

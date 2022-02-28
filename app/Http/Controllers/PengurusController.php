@@ -6,9 +6,10 @@ use App\Models\Pengurus;
 use App\Models\Anggota;
 use App\Models\Angsuran;
 use App\Models\Pinjaman;
+use App\Models\Simpanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use DataTables;
 use DB;
 
 use Carbon\Carbon;
@@ -27,6 +28,19 @@ class PengurusController extends Controller
         $penguruses = Pengurus::paginate(5);
 
         return view('pages.pengurus', compact('penguruses'));
+    }
+
+    public function rekap()
+    {
+
+        return view('pages.rekap');
+    }
+
+    public function get_simpanan()
+    {
+        $simpanan = Simpanan::all();
+
+        return DataTables::of($simpanan)->make(true);
     }
 
     /**
@@ -138,7 +152,7 @@ class PengurusController extends Controller
     public function dashboard()
     {
         $totalAnggota = Anggota::count();
-        
+
         $totalSimpanan = Anggota::sum('total_simpanan');
         $totalPinjaman = Anggota::sum('total_pinjaman');
         $totalPinjaman = Helper::revertMoney($totalPinjaman);
@@ -150,8 +164,8 @@ class PengurusController extends Controller
         // $totalPinjaman = (new Helper)->revertMoney($totalPinjaman[0]->total_pinjam);
         // $totalSimpanan = (new Helper)->revertMoney($totalSimpanan[0]->simpanan);
 
-        $simpanan = DB::table('simpanans')->join('anggotas','anggotas.no_kta','simpanans.no_kta')->whereDate('simpanans.created_at', Carbon::today())->limit(5)->get();
-        $angsuran = DB::table('angsurans')->join('anggotas','anggotas.no_kta','angsurans.no_kta')->whereDate('angsurans.created_at', Carbon::today())->limit(5)->get();
+        $simpanan = DB::table('simpanans')->join('anggotas', 'anggotas.no_kta', 'simpanans.no_kta')->whereDate('simpanans.created_at', Carbon::today())->limit(5)->get();
+        $angsuran = DB::table('angsurans')->join('anggotas', 'anggotas.no_kta', 'angsurans.no_kta')->whereDate('angsurans.created_at', Carbon::today())->limit(5)->get();
 
         $grafikAngsuran = DB::select(DB::raw("select count(*) as totalMothly, sum(biaya_bunga)+sum(biaya_cicilan) as total_biaya, MONTH(tgl_angsuran) as bulan from angsurans group by month(tgl_angsuran) limit 6;"));
         $grafikSimpanan = DB::select(DB::raw("select count(*) as totalMothly, sum(deposit_pokok)+sum(deposit_wajib) as total_biaya, MONTH(tgl_deposit) as bulan from simpanans group by month(tgl_deposit) limit 6;"));

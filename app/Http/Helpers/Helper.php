@@ -9,10 +9,10 @@ class Helper
      *
      * @return void
      */
-    public function revertMoney($money)
+    public static function revertMoney($money)
     {
         //
-        return "Rp. ".number_format($money,2,',','.',);
+        return "Rp. " . number_format($money, 2, ',', '.',);
     }
 
     /**
