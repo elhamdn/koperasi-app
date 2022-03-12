@@ -12,10 +12,10 @@
         <div class="row mb-3">
             <div class="col-md-12">
                 @if (\Session::has('error'))
-                    <div class="alert alert-light-danger color-danger"><i class="fas fa-circle-exclamation mr-2"></i> {!! \Session::get('error') !!}</div>
+                <div class="alert alert-light-danger color-danger"><i class="fas fa-circle-exclamation mr-2"></i> {!! \Session::get('error') !!}</div>
                 @endif
                 @if (\Session::has('message'))
-                    <div class="alert alert-light-success color-success"><i class="fas fa-check mr-2"></i> {!! \Session::get('message') !!}</div>
+                <div class="alert alert-light-success color-success"><i class="fas fa-check mr-2"></i> {!! \Session::get('message') !!}</div>
                 @endif
             </div>
             <div class="col-md-2">
@@ -86,12 +86,16 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Deposit Wajib</label>
-                                    <input type="number" name="deposit_wajib" class="form-control" id="exampleInputEmail1" min="0" required placeholder="Deposit Wajib">
+                                    <label for="exampleFormControlSelect1">Jenis Simpanan</label>
+                                    <select class="form-control" name="jenis_simpanan" id="exampleFormControlSelect1">
+                                        <option value="pokok">Pokok</option>
+                                        <option value="wajib">Wajib</option>
+                                        <option value="sukarela">Sukarela</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Uang Diterima</label>
-                                    <input type="number" name="total" class="form-control" id="exampleInputEmail1" min="0" required placeholder="Jumlah Uang Diterima">
+                                    <label for="exampleInputEmail1">Deposit</label>
+                                    <input type="number" name="deposit" class="form-control" id="exampleInputEmail1" min="0" required placeholder="Jumlah Uang Diterima">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Keterangan</label>
@@ -115,30 +119,30 @@
                         <tr class="text-center">
                             <th scope="row">Nomor transaksi</th>
                             <th>Tanggal Deposit</th>
-                            <th>Deposit Pokok</th>
-                            <th>Deposit Wajib</th>
+                            <th>Deposit</th>
+                            <th>Jenis Simpanan</th>
                             <th>Keterangan</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         @if (count($simpanans) == 0)
-                            <tr>
-                                <td colspan="5" class="text-center">
-                                    <div class="m-3">
-                                        <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
-                                        <span>Data Tidak Ditemukan</span>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div class="m-3">
+                                    <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
+                                    <span>Data Tidak Ditemukan</span>
+                                </div>
+                            </td>
+                        </tr>
                         @endif
 
                         @foreach ($simpanans as $data)
                         <tr class="text-center">
                             <th class="align-middle" scope="row">{{ $data->no_transaksi }}</th>
                             <td class="align-middle"> {{ $data->tgl_deposit}}</td>
-                            <td class="align-middle">{{ $Helper->revertMoney($data->deposit_pokok) }}</td>
-                            <td class="align-middle">{{ $Helper->revertMoney($data->deposit_wajib) }}</td>
+                            <td class="align-middle">{{ $Helper->revertMoney($data->deposit) }}</td>
+                            <td class="align-middle"> {{ $data->jenis_simpanan }}</td>
                             <td class="align-middle"> {{ $data->keterangan }}</td>
                         </tr>
                         @endforeach

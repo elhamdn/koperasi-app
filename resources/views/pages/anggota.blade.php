@@ -23,7 +23,7 @@
                             <h4 class="modal-title" id="myModalLabel33">Tambah Anggota </h4>
                             <span data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                         </div>
-                        <form method="post" action="{{ url('/anggota/add') }}" target="invisible">
+                        <form method="post" action="{{ url('/anggota/add') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="modal-body text-left">
                                 <div class="row">
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light-secondary"data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success">Submit</button>
                             </div>
                         </form>
@@ -96,14 +96,14 @@
                     </thead>
                     <tbody>
                         @if (count($anggotas) == 0)
-                            <tr>
-                                <td colspan="5" class="text-center">
-                                    <div class="m-3">
-                                        <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
-                                        <span>Data Tidak Ditemukan</span>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div class="m-3">
+                                    <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
+                                    <span>Data Tidak Ditemukan</span>
+                                </div>
+                            </td>
+                        </tr>
                         @endif
                         @foreach ($anggotas as $data)
                         <tr class="text-center">
@@ -123,7 +123,7 @@
                                                 <h4 class="modal-title" id="myModalLabel33">Edit Anggota </h4>
                                                 <span data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                                             </div>
-                                            <form method="post" action="{{ url('/anggota/edit') }}" target="invisible">
+                                            <form method="post" action="{{ url('/anggota/edit') }}">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <div class="modal-body text-left">
                                                     <div class="row">
@@ -179,7 +179,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light-secondary"data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-success">Submit</button>
                                                 </div>
                                             </form>
@@ -244,7 +244,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-light-secondary"data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>

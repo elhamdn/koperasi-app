@@ -11,25 +11,26 @@
         <div class="row mb-3">
 
         </div>
-        <div class="card">
-            <div class="row">
-                <div class="table-responsive">
-                    <table id="example" class="table table-hover text-center">
-                        <thead>
-                            <tr>
-                                <th>Nomor transaksi</th>
-                                <th>Nomor KTA</th>
-                                <th>Nama Anggota</th>
-                                <th>Tanggal Deposit</th>
-                                <th>Deposit Pokok</th>
-                                <th>Deposit Wajib</th>
-                                <th>Keterangan</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        <!-- <div class="card"> -->
+        <div class="row" style="background-color: white;">
+            <div class="table-responsive">
+                <table id="example" class="table table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>Nomor transaksi</th>
+                            <th>Nomor KTA</th>
+                            <th>Nama Anggota</th>
+                            <th>Tanggal Deposit</th>
+                            <th>Deposit</th>
+                            <th>Jenis Simpanan</th>
+                            <th>Keterangan</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
+        <!-- </div> -->
     </div>
 </div>
 @endsection
@@ -63,14 +64,20 @@
                     data: "tgl_deposit",
                 },
                 {
-                    data: "deposit_wajib",
+                    data: "deposit",
                 },
                 {
-                    data: "deposit_pokok",
+                    data: "jenis_simpanan",
                 },
                 {
                     data: "keterangan",
-                },
+                }, {
+                    data: null,
+                    render: function(data, type, row) {
+                        // console.log(data, type, row)
+                        return `<a class="btn btn-success" target="_blank" href="simpanan/${data.no_transaksi}">Cetak </a>`;
+                    }
+                }
             ],
             "language": {
                 processing: '<div class="fa-3x"><i class="fas fa-spinner fa-spin"></i></div>'

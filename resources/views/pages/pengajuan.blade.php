@@ -41,14 +41,14 @@
                     </thead>
                     <tbody>
                         @if (count($pinjamans) == 0)
-                            <tr>
-                                <td colspan="5" class="text-center">
-                                    <div class="m-3">
-                                        <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
-                                        <span>Data Tidak Ditemukan</span>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div class="m-3">
+                                    <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
+                                    <span>Data Tidak Ditemukan</span>
+                                </div>
+                            </td>
+                        </tr>
                         @endif
 
                         @foreach ($pinjamans as $data)
@@ -66,7 +66,7 @@
                                     <li><span class="dropdown-item" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#viewDetail{{$data->no_transaksi}}">View Detail</span></li>
 
                                     @if ($data->status_pengajuan_pinjaman == 'pending')
-                                    
+
                                     <li><span class="dropdown-item" style="cursor: pointer" data-toggle="modal" data-target="#modalApprove-{{$data->no_transaksi}}">Approve</span></li>
                                     <li><span class="dropdown-item" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal-{{$data->no_transaksi}}">Reject</span></li>
                                     @endif
@@ -163,7 +163,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-light-secondary"data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                                 <span data-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="post" action="{{ url('/pengajuan/approve') }}" target="invisible">
+                                                <form method="post" action="{{ url('/pengajuan/approve') }}">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                                     <input type="hidden" name="no_transaksi" value="{{ $data->no_transaksi }}">
@@ -209,7 +209,7 @@
                                                 <span data-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="post" action="{{ url('/pengajuan/reject') }}" target="invisible">
+                                                <form method="post" action="{{ url('/pengajuan/reject') }}">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <input type="hidden" name="no_kta" value="{{ $no_kta }}">
                                                     <input type="hidden" name="no_transaksi" value="{{ $data->no_transaksi }}">

@@ -74,7 +74,7 @@ class AnggotaController extends Controller
             $anggota->email = $request->email;
             $anggota->jenis_kelamin = $request->jenis_kelamin;
             $anggota->nama_anggota = $request->nama_anggota;
-            $anggota->alamat_anggota = "'".$request->alamat_anggota."'";
+            $anggota->alamat_anggota = "'" . $request->alamat_anggota . "'";
             $anggota->nomor_hp = $request->nomor_hp;
             $anggota->password = Hash::make($request->password);
             $anggota->total_pinjaman = 0;
@@ -85,7 +85,7 @@ class AnggotaController extends Controller
             return redirect()->to('/master/anggota')->with('message', 'Data Berhasil');;
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
+            // dd($th);
             return redirect()->to('/master/anggota')->with('error', 'Data gagal diapprove');;
         }
     }
@@ -180,7 +180,7 @@ class AnggotaController extends Controller
         try {
 
             $pinjaman = Pinjaman::where('no_kta', $user->no_kta)->latest('created_at')->paginate(5)->withQueryString();
-            $angsuran = DB::select(DB::raw("select count(*) as total, no_transaksi_pinjaman from angsurans WHERE no_kta = '".$user->no_kta."' group by no_transaksi_pinjaman;"));
+            $angsuran = DB::select(DB::raw("select count(*) as total, no_transaksi_pinjaman from angsurans WHERE no_kta = '" . $user->no_kta . "' group by no_transaksi_pinjaman;"));
             $list_angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('created_at')->get();
         } catch (\Throwable $th) {
             dd($th);
@@ -244,7 +244,7 @@ class AnggotaController extends Controller
         try {
             $user = Auth::guard('anggota')->user();
 
-            if(Hash::check($request->password_lama, $user->password)){
+            if (Hash::check($request->password_lama, $user->password)) {
                 $anggota = Anggota::find($user->no_kta);
 
                 $anggota->password = Hash::make($request->password_baru);
@@ -253,8 +253,6 @@ class AnggotaController extends Controller
             }
 
             return redirect()->to('/member/profile')->with('error', 'Password Lama Tidak Sesuai');
-
-
         } catch (\Throwable $th) {
             //throw $th;
             return redirect()->to('/member/profile')->with('error', 'Password gagal Terubah');;

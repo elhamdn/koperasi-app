@@ -1,4 +1,3 @@
-
 @section('css')
 <style>
     body {
@@ -120,8 +119,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="post" action="{{ url('/pengajuan-pinjaman') }}" target="invisible">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <form method="post" action="{{ url('/pengajuan-pinjaman') }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="no_kta" value="{{ $user->no_kta }}">
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Total Pinjam</label>
@@ -204,15 +203,14 @@
             <div class="sidebar-menu">
                 <ul class="menu">
                     <li class="sidebar-title">Menu</li>
-                    
-                    <li
-                        class="sidebar-item active ">
+
+                    <li class="sidebar-item active ">
                         <a href="index.html" class='sidebar-link'>
                             <i class="bi bi-grid-fill"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    
+
                 </ul>
             </div>
             <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
@@ -224,14 +222,14 @@
                 <i class="bi bi-justify fs-3"></i>
             </a>
         </header>
-            
+
         <div class="page-heading">
             <h3>Beranda</h3>
         </div>
         <div class="page-content">
             <section class="row">
                 <div class="col-12 col-lg-12">
-                    
+
                 </div>
             </section>
         </div>

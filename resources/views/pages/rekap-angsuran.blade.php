@@ -11,22 +11,21 @@
         <div class="row mb-3">
 
         </div>
-        <div class="card">
-            <div class="row">
-                <div class="table-responsive">
-                    <table id="tableAngsuran" class="table table-hover text-center">
-                        <thead>
-                            <tr>
-                                <th>Nomor transaksi</th>
-                                <th>Nomor KTA</th>
-                                <th>Nama Anggota</th>
-                                <th>Tanggal Angsuran</th>
-                                <th>Biaya Cicilan</th>
-                                <th>Biaya Bunga</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        <div class="row" style="background-color: white;">
+            <div class="table-responsive">
+                <table id="tableAngsuran" class="table table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>Nomor transaksi</th>
+                            <th>Nomor KTA</th>
+                            <th>Nama Anggota</th>
+                            <th>Tanggal Angsuran</th>
+                            <th>Biaya Cicilan</th>
+                            <th>Biaya Bunga</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
 
@@ -69,7 +68,13 @@
                 },
                 {
                     data: "biaya_bunga",
-                },
+                }, {
+                    data: null,
+                    render: function(data, type, row) {
+                        // console.log(data, type, row)
+                        return `<a class="btn btn-success" target="_blank" href="angsuran/${data.no_transaksi}">Cetak </a>`;
+                    }
+                }
             ]
         });
     });

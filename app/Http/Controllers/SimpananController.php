@@ -42,9 +42,6 @@ class SimpananController extends Controller
     public function store(Request $request)
     {
         try {
-            if ((int)$request->deposit_wajib >= (int)$request->total) {
-                return redirect()->to('/simpanan?no_kta=' . $no_kta)->with('error', 'Duit yang diterima tidak sesuai');;
-            }
             $latestNomorTransaksi = Simpanan::select('no_transaksi')->latest()->first();
             $dataSimpanan = new Simpanan();
             if ($latestNomorTransaksi) {
@@ -52,16 +49,15 @@ class SimpananController extends Controller
             } else {
                 $dataSimpanan->no_transaksi = 1;
             }
-            $depositPokok = (int)$request->total - (int)$request->deposit_wajib;
             $dataSimpanan->no_kta = $request->no_kta;
             $dataSimpanan->keterangan = $request->keterangan;
             $dataSimpanan->tgl_deposit = Carbon::now();
-            $dataSimpanan->deposit_wajib = $request->deposit_wajib;
-            $dataSimpanan->deposit_pokok = $depositPokok;
+            $dataSimpanan->deposit = $request->deposit;
+            $dataSimpanan->jenis_simpanan = $request->jenis_simpanan;
             $dataSimpanan->save();
 
             $anggota = Anggota::find($request->no_kta);
-            $anggota->total_simpanan = (int)$anggota->total_simpanan + (int)$request->total;
+            $anggota->total_simpanan = (int)$anggota->total_simpanan + (int)$request->deposit;
             $anggota->save();
 
             return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('message', 'Data Berhasil Ditambahkan');;
@@ -135,8 +131,8 @@ class SimpananController extends Controller
             $dataSimpanan->no_kta = $request->no_kta;
             $dataSimpanan->keterangan = $request->keterangan;
             $dataSimpanan->tgl_deposit = Carbon::now();
-            $dataSimpanan->deposit_wajib = -$request->total;;
-            $dataSimpanan->deposit_pokok = 0;
+            $dataSimpanan->deposit = -$request->total;
+            $dataSimpanan->jenis_simpanan = 'wajib';
             $dataSimpanan->save();
 
             $anggota->total_simpanan = (int)$anggota->total_simpanan - (int)$request->total;

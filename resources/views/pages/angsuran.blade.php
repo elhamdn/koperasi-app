@@ -52,7 +52,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     @if ($isSudahLunas)
-                        <div class="form-control border border-success text-center" id="basicInput"><label class="text-success">Pinjaman Sudah Lunas</label></div>
+                    <div class="form-control border border-success text-center" id="basicInput"><label class="text-success">Pinjaman Sudah Lunas</label></div>
                     @else
                     <div class="form-control" id="basicInput"><label for="basicInput">Sisa {{$jmlCicilan}} Angsuran</label></div>
                     @endif
@@ -66,8 +66,8 @@
                             <span data-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                         </div>
                         <div class="modal-body">
-                            <form method="post" action="{{ url('/angsuran/add') }}" target="invisible">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <form method="post" action="{{ url('/angsuran/add') }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <table>
                                     <tr>
                                         <td><span>Tagihan Cicilan</span></td>
@@ -80,9 +80,15 @@
                                         <td><span>{{$Helper->revertMoney($Bungaperbulan)}}</span></td>
                                     </tr>
                                     <tr>
-                                        <td><hr></td>
-                                        <td><hr></td>
-                                        <td><hr></td>
+                                        <td>
+                                            <hr>
+                                        </td>
+                                        <td>
+                                            <hr>
+                                        </td>
+                                        <td>
+                                            <hr>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><span>Total</span></td>
@@ -90,9 +96,15 @@
                                         <td><span>{{$Helper->revertMoney($cicilan)}}</span></td>
                                     </tr>
                                     <tr>
-                                        <td><hr></td>
-                                        <td><hr></td>
-                                        <td><hr></td>
+                                        <td>
+                                            <hr>
+                                        </td>
+                                        <td>
+                                            <hr>
+                                        </td>
+                                        <td>
+                                            <hr>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><span>Simpanan Anda</span></td>
@@ -134,14 +146,14 @@
                     </thead>
                     <tbody>
                         @if (count($angsurans) == 0)
-                            <tr>
-                                <td colspan="5" class="text-center">
-                                    <div class="m-3">
-                                        <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
-                                        <span>Data Tidak Ditemukan</span>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div class="m-3">
+                                    <i class="fa fa-calendar-xmark mb-2" style="font-size:50px"></i><br>
+                                    <span>Data Tidak Ditemukan</span>
+                                </div>
+                            </td>
+                        </tr>
                         @endif
 
                         @foreach ($angsurans as $data)

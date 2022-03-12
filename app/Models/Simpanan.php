@@ -13,8 +13,8 @@ class Simpanan extends Model
         'no_transaksi',
         'no_kta',
         'tgl_deposit',
-        'deposit_pokok',
-        'deposit_wajib',
+        'deposit',
+        'jenis_simpanan',
         'keterangan',
     ];
 }

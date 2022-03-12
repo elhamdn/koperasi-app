@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'alamat_anggota' => 'Jl. Raya Puspiptek, Buaran, Kec. Pamulang, Kota Tangerang Selatan, Banten 15310',
             'jenis_kelamin' => 'L',
             'nomor_hp' => '08871224023',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('123'),
             'total_pinjaman' => '0',
             'total_simpanan' => '0',
             'created_at' => Carbon::now(),
@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             'alamat_pengurus' => 'Jl. Raya Puspiptek, Buaran, Kec. Pamulang, Kota Tangerang Selatan, Banten 15310',
             'jenis_kelamin' => 'L',
             'nomor_hp' => '08871224025',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('123'),
             'jenis_pengurus' => 'bendahara',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
