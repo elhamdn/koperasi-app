@@ -15,7 +15,7 @@
 
             <div class="dropdown show">
                 <h2 class="d-inline p-2">{{$user->nama_anggota}}</h2>
-                <i class="fas fa-user text-white bg-secondary" style="padding: 15px;border-radius: 50px; font-size: 20px" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                <img src="{{ URL::to('/') }}/data_file/{{$user->profile_picture}}" alt="" srcset="" style="border-radius:50px;width: 50px;height: 50px;background-position: center center;background-repeat: no-repeat;"  href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                 <div class="dropdown-menu dropdown-menu-right">
                     <button class="dropdown-item" type="button">

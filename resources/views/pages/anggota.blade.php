@@ -23,10 +23,19 @@
                             <h4 class="modal-title" id="myModalLabel33">Tambah Anggota </h4>
                             <span data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                         </div>
-                        <form method="post" action="{{ url('/anggota/add') }}">
+                        <form action="{{ url('/anggota/add') }}" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="modal-body text-left">
                                 <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <label>Foto Profile: </label>
+                                        <div class="form-group">
+                                            <input type="file" name="file" onchange="loadFile(event, 'output_store')">
+                                            <img id="output_store"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
                                     <div class="col-md-6">
                                         <label>Nomor KTA: </label>
                                         <div class="form-group">
@@ -123,16 +132,19 @@
                                                 <h4 class="modal-title" id="myModalLabel33">Edit Anggota </h4>
                                                 <span data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-circle-xmark" style="font-size:18px; cursor:pointer"></i></span>
                                             </div>
-                                            <form method="post" action="{{ url('/anggota/edit') }}">
+                                            <form action="{{ url('/anggota/edit') }}" method="POST" enctype="multipart/form-data">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <div class="modal-body text-left">
                                                     <div class="row">
-                                                        <!-- <div class="col-md-6">
-                                                            <label>No KTA: </label>
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-8">
+                                                            <label>Foto Profile: </label>
                                                             <div class="form-group">
-                                                                <input type="text" value="{{$data->no_kta}}" disabled name="no_kta" class="form-control" id="exampleFormControlInput0" required placeholder="Nomor KTA">
+                                                                <input type="file" name="file" onchange="loadFile(event, 'output_edit')"><br>
+                                                                <img src="{{ URL::to('/') }}/data_file/{{$data->profile_picture}}" id="output_edit"/>
                                                             </div>
-                                                        </div> -->
+                                                        </div>
+                                                        <div class="col-md-2"></div>
                                                         <div class="col-md-6">
                                                             <label>Nomor KTA: </label>
                                                             <div class="form-group">
@@ -199,6 +211,11 @@
                                             </div>
                                             <div class="modal-body text-left">
                                                 <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <img class="mx-auto d-block" src="{{ URL::to('/') }}/data_file/{{$data->profile_picture}}" alt="" style="height:150px; width:150px">
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-6">
                                                         <label>No KTA: </label>
                                                         <div class="form-group">
@@ -262,4 +279,13 @@
         </div>
     </div>
 </div>
+<script>
+  var loadFile = function(event, name) {
+    var output = document.getElementById(name);
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
 @endsection
