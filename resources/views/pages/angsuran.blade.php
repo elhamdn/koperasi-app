@@ -9,6 +9,22 @@
 <div class="row row-cards">
     <div class="col-12">
         <div class="row mb-3">
+            <div class="col-md-12">
+                @if (\Session::has('error'))
+                <div class="alert alert-light-danger color-danger"><i class="fas fa-circle-exclamation mr-2"></i> {!! \Session::get('error') !!}</div>
+                @endif
+                @if (\Session::has('message'))
+                @php 
+                    $arr = json_decode(\Session::get('message'));
+                @endphp
+                <div class="alert alert-light-success color-success d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="fas fa-check mr-2"></i> {{$arr->pesan}}
+                    </span>
+                    <a class="btn btn-success" target="_blank" href="/master/rekap/angsuran/{{$arr->no_transaksi}}">Cetak Kwitansi</a> 
+                </div>
+                @endif
+            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <button class="btn btn-secondary text-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

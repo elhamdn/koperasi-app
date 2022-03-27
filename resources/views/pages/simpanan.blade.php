@@ -15,7 +15,15 @@
                 <div class="alert alert-light-danger color-danger"><i class="fas fa-circle-exclamation mr-2"></i> {!! \Session::get('error') !!}</div>
                 @endif
                 @if (\Session::has('message'))
-                <div class="alert alert-light-success color-success"><i class="fas fa-check mr-2"></i> {!! \Session::get('message') !!}</div>
+                @php 
+                    $arr = json_decode(\Session::get('message'));
+                @endphp
+                <div class="alert alert-light-success color-success d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="fas fa-check mr-2"></i> {{$arr->pesan}}
+                    </span>
+                    <a class="btn btn-success" target="_blank" href="/master/rekap/simpanan/{{$arr->no_transaksi}}">Cetak Kwitansi</a> 
+                </div>
                 @endif
             </div>
             <div class="col-md-2">

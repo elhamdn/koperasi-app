@@ -61,7 +61,10 @@ class SimpananController extends Controller
             $anggota->total_simpanan = (int)$anggota->total_simpanan + (int)$request->deposit;
             $anggota->save();
 
-            return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('message', 'Data Berhasil Ditambahkan');;
+            $getLatest = Simpanan::select('no_transaksi')->latest()->first();
+            $getLatest = $getLatest->no_transaksi;
+
+            return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('message', json_encode(['pesan' => 'Data Berhasil Ditambahkan', 'no_transaksi' => $getLatest]));
         } catch (\Throwable $th) {
             return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('error', 'Data Gagal Ditambahkan');;
         }

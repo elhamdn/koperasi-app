@@ -113,7 +113,10 @@ class AngsuranController extends Controller
                 $anggota->update(['total_pinjaman' => $hasil]);
             }
 
-            return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', 'Data Berhasil diapprove');;
+            $getLatest = Angsuran::select('no_transaksi')->latest()->first();
+            $getLatest = $getLatest->no_transaksi;
+
+            return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', json_encode(['pesan' => 'Data Berhasil Diangsur', 'no_transaksi' => $getLatest]));;
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);
