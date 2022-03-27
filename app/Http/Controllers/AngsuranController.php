@@ -31,8 +31,11 @@ class AngsuranController extends Controller
         $no_kta = $request->no_kta;
         $no_transaksi = $request->no_transaksi;
         $pinjamans = Pinjaman::where('no_kta', $request->no_kta)->where('status_pengajuan_pinjaman', 'approve')->get();
-        $angsurans = Angsuran::where('no_transaksi_pinjaman', $no_transaksi)->paginate(5)->withQueryString();
-
+        $angsurans = Angsuran::where('no_transaksi_pinjaman', $no_transaksi);
+        if($request->order){
+            $angsurans = $angsurans->orderBy('created_at',$request->order);
+        }
+        $angsurans = $angsurans->paginate(5)->withQueryString();
         $pinjamanPilihan = Pinjaman::find($no_transaksi);
         $anggotaPilihan = Anggota::find($request->no_kta);
         try {

@@ -119,8 +119,18 @@
                 </div>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="dropdown">
+                <button class="btn btn-secondary text-dark dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter Tanggal Deposit
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    <a class="dropdown-item" href="/simpanan?order=asc{{ $no_kta ? '&no_kta=' . $no_kta : '' }}">Ascending</a>
+                    <a class="dropdown-item" href="/simpanan?order=desc{{ $no_kta ? '&no_kta=' . $no_kta : '' }}">Descending</a>
+                </div>
+            </div>
+        </div>
         <div class="card">
-
             <div class="table-responsive">
                 <table class="table card-table table-vcenter text-nowrap datatable">
                     <thead>

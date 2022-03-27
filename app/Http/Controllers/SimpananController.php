@@ -19,7 +19,11 @@ class SimpananController extends Controller
     {
         $anggotas = Anggota::all();
         $no_kta = $request->no_kta;
-        $simpanans = Simpanan::where('no_kta', $no_kta)->latest('created_at')->paginate(5)->withQueryString();
+        $simpanans = Simpanan::where('no_kta', $no_kta);
+        if($request->order){
+            $simpanans = $simpanans->orderBy('created_at',$request->order);
+        }
+        $simpanans = $simpanans->paginate(5)->withQueryString();
         $totalSimpanan = Anggota::where('no_kta', $no_kta)->first();
         return view('pages.simpanan', compact('anggotas', 'simpanans', 'no_kta', 'totalSimpanan'));
     }
