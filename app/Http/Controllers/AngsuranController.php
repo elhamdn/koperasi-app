@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Http\Helpers\Helper;
+use DB;
 
 
 class AngsuranController extends Controller
@@ -163,5 +164,22 @@ class AngsuranController extends Controller
     public function destroy(Angsuran $angsuran)
     {
         //
+    }
+
+    public function angsuran_all(Request $request)
+    {
+        //
+        $data = DB::table('angsurans')->select('angsurans.no_transaksi', 'angsurans.no_kta', 'anggotas.nama_anggota', 'angsurans.tgl_angsuran', 'angsurans.biaya_cicilan', 'angsurans.biaya_bunga')->join('anggotas', 'anggotas.no_kta', '=', 'angsurans.no_kta')->orderBy('angsurans.updated_at', 'desc');
+        if($q = $request->search){
+            $data = $data->where('angsurans.no_kta','like','%'.$q.'%')
+            ->orWhere('angsurans.tgl_pinjam','like','%'.$q.'%')
+            ->orWhere('angsurans.total_pinjam','like','%'.$q.'%')
+            ->orWhere('anggotas.nama_anggota','like','%'.$q.'%')
+            ->orWhere('angsurans.tgl_angsuran','like','%'.$q.'%')
+            ->orWhere('angsurans.biaya_cicilan','like','%'.$q.'%')
+            ->orWhere('angsurans.biaya_bunga','like','%'.$q.'%');
+        }
+
+        return $data->get();
     }
 }

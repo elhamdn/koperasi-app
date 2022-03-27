@@ -56,6 +56,10 @@ Route::middleware('auth:pengurus')->group(function () {
     Route::get('/pengajuan', [PinjamanController::class, 'index_pengajuan']);
     Route::post('/pengajuan/approve', [PinjamanController::class, 'approve_pinjaman']);
     Route::post('/pengajuan/reject', [PinjamanController::class, 'reject_pinjaman']);
+
+    Route::get('/pinjaman-all', [PinjamanController::class, 'pinjaman_all'])->name('pinjaman.all');
+    Route::get('/angsuran-all', [AngsuranController::class, 'angsuran_all'])->name('angsuran.all');
+    Route::get('/simpanan-all', [SimpananController::class, 'simpanan_all'])->name('simpanan.all');
 });
 
 Route::middleware('auth:anggota')->group(function () {

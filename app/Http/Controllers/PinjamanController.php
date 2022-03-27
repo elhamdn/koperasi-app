@@ -150,4 +150,23 @@ class PinjamanController extends Controller
     {
         //
     }
+
+    public function pinjaman_all(Request $request)
+    {
+        //
+        $data = DB::table('pinjamen')->select('pinjamen.no_transaksi', 'pinjamen.no_kta', 'anggotas.nama_anggota', 'pinjamen.status_pengajuan_pinjaman', 'pinjamen.tgl_pinjam','pinjamen.total_pinjam','pinjamen.tenor_cicilan','pinjamen.keterangan')->join('anggotas', 'anggotas.no_kta', '=', 'pinjamen.no_kta')->orderBy('pinjamen.updated_at', 'desc');
+        if($q = $request->search){
+            $data = $data->where('pinjamen.no_kta','like','%'.$q.'%')
+            ->orWhere('pinjamen.tgl_pinjam','like','%'.$q.'%')
+            ->orWhere('pinjamen.total_pinjam','like','%'.$q.'%')
+            ->orWhere('anggotas.nama_anggota','like','%'.$q.'%')
+            ->orWhere('pinjamen.status_pengajuan_pinjaman','like','%'.$q.'%')
+            ->orWhere('pinjamen.total_pinjam','like','%'.$q.'%')
+            ->orWhere('pinjamen.tenor_cicilan','like','%'.$q.'%')
+            ->orWhere('pinjamen.keterangan','like','%'.$q.'%');
+        }
+
+        return $data->get();
+    }
+
 }

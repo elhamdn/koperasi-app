@@ -6,6 +6,7 @@ use App\Models\Simpanan;
 use App\Models\Anggota;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use DB;
 
 class SimpananController extends Controller
 {
@@ -143,5 +144,23 @@ class SimpananController extends Controller
             dd($th);
             return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('error', 'Tarik Dana Gagal Ditambahkan');;
         }
+    }
+
+    public function simpanan_all(Request $request)
+    {
+        //
+        $data = DB::table('simpanans')->select('simpanans.no_transaksi', 'simpanans.no_kta', 'anggotas.nama_anggota', 'simpanans.tgl_deposit', 'simpanans.deposit', 'simpanans.jenis_simpanan', 'simpanans.keterangan')->join('anggotas', 'anggotas.no_kta', '=', 'simpanans.no_kta')->orderBy('simpanans.updated_at', 'desc');
+        if($q = $request->search){
+            $data = $data->where('simpanans.no_kta','like','%'.$q.'%')
+            ->orWhere('simpanans.tgl_pinjam','like','%'.$q.'%')
+            ->orWhere('simpanans.total_pinjam','like','%'.$q.'%')
+            ->orWhere('anggotas.nama_anggota','like','%'.$q.'%')
+            ->orWhere('simpanans.tgl_deposit','like','%'.$q.'%')
+            ->orWhere('simpanans.deposit','like','%'.$q.'%')
+            ->orWhere('simpanans.jenis_simpanan','like','%'.$q.'%')
+            ->orWhere('simpanans.keterangan','like','%'.$q.'%');
+        }
+
+        return $data->get();
     }
 }
