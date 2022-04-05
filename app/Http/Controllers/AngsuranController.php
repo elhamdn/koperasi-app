@@ -79,51 +79,55 @@ class AngsuranController extends Controller
      */
     public function store(Request $request)
     {
-        $tenor_cicilan_dibayar = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pinjaman)->count();
-        $pinjaman = Pinjaman::where('no_transaksi', $request->no_transaksi_pinjaman)->first();
-        if ($tenor_cicilan_dibayar == $pinjaman->tenor_cicilan) {
-            return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', 'Tagihan Sudah Lunas');;
-        }
-        try {
-            $angsuran = new Angsuran();
-            $latestNomorTransaksi = Angsuran::select('no_transaksi')->latest()->first();
-            if ($latestNomorTransaksi) {
-                $angsuran->no_transaksi = $latestNomorTransaksi->no_transaksi + 1;
-            } else {
-                $angsuran->no_transaksi = 1;
+        if($request->no_transaksi_pinjaman && $request->no_kta){
+            $tenor_cicilan_dibayar = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pinjaman)->count();
+            $pinjaman = Pinjaman::where('no_transaksi', $request->no_transaksi_pinjaman)->first();
+            if ($tenor_cicilan_dibayar == $pinjaman->tenor_cicilan) {
+                return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', 'Tagihan Sudah Lunas');;
             }
-            $angsuran->no_kta = $request->no_kta;
-            $angsuran->no_transaksi_pinjaman = $request->no_transaksi_pinjaman;
-            $angsuran->tgl_angsuran = Carbon::now();
-            $angsuran->biaya_cicilan = $request->biaya_cicilan;
-            $angsuran->biaya_bunga = $request->biaya_bunga;
-            $angsuran->save();
+            try {
+                $angsuran = new Angsuran();
+                $latestNomorTransaksi = Angsuran::select('no_transaksi')->latest()->first();
+                if ($latestNomorTransaksi) {
+                    $angsuran->no_transaksi = $latestNomorTransaksi->no_transaksi + 1;
+                } else {
+                    $angsuran->no_transaksi = 1;
+                }
+                $angsuran->no_kta = $request->no_kta;
+                $angsuran->no_transaksi_pinjaman = $request->no_transaksi_pinjaman;
+                $angsuran->tgl_angsuran = Carbon::now();
+                $angsuran->biaya_cicilan = $request->biaya_cicilan;
+                $angsuran->biaya_bunga = $request->biaya_bunga;
+                $angsuran->save();
 
-            if ($request->isChecked) {
-                $anggota2 = Anggota::find($request->no_kta);
-                $hasil = (int)$anggota2->total_simpanan - ((int)$request->biaya_cicilan+(int)$request->biaya_bunga);
-                $anggota2->update(['total_simpanan' => $hasil]);
+                if ($request->isChecked) {
+                    $anggota2 = Anggota::find($request->no_kta);
+                    $hasil = (int)$anggota2->total_simpanan - ((int)$request->biaya_cicilan+(int)$request->biaya_bunga);
+                    $anggota2->update(['total_simpanan' => $hasil]);
+                }
+
+                $pinjamanPilihan = Pinjaman::select('tenor_cicilan', 'total_pinjam')->where('no_transaksi', $request->no_transaksi_pinjaman)->first();
+                $tenor_cicilan = $pinjamanPilihan->tenor_cicilan ? $pinjamanPilihan->tenor_cicilan : 0;
+                $isSudahLunas = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pinjaman)->count() == $tenor_cicilan ? true : false;
+
+                if ($isSudahLunas) {
+                    // change user total pinjaman
+                    $anggota = Anggota::find($request->no_kta);
+                    $hasil = (int)$anggota->total_pinjaman - (int)$pinjamanPilihan->total_pinjam;
+                    $anggota->update(['total_pinjaman' => $hasil]);
+                }
+
+                $getLatest = Angsuran::select('no_transaksi')->latest()->first();
+                $getLatest = $getLatest->no_transaksi;
+
+                return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', json_encode(['pesan' => 'Data Berhasil Diangsur', 'no_transaksi' => $getLatest]));;
+            } catch (\Throwable $th) {
+                //throw $th;
+                dd($th);
+                return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('error', 'Data gagal diapprove');;
             }
-
-            $pinjamanPilihan = Pinjaman::select('tenor_cicilan', 'total_pinjam')->where('no_transaksi', $request->no_transaksi_pinjaman)->first();
-            $tenor_cicilan = $pinjamanPilihan->tenor_cicilan ? $pinjamanPilihan->tenor_cicilan : 0;
-            $isSudahLunas = Angsuran::where('no_transaksi_pinjaman', $request->no_transaksi_pinjaman)->count() == $tenor_cicilan ? true : false;
-
-            if ($isSudahLunas) {
-                // change user total pinjaman
-                $anggota = Anggota::find($request->no_kta);
-                $hasil = (int)$anggota->total_pinjaman - (int)$pinjamanPilihan->total_pinjam;
-                $anggota->update(['total_pinjaman' => $hasil]);
-            }
-
-            $getLatest = Angsuran::select('no_transaksi')->latest()->first();
-            $getLatest = $getLatest->no_transaksi;
-
-            return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('message', json_encode(['pesan' => 'Data Berhasil Diangsur', 'no_transaksi' => $getLatest]));;
-        } catch (\Throwable $th) {
-            //throw $th;
-            dd($th);
-            return redirect()->to('/angsuran?no_kta=' . $request->no_kta . '&no_transaksi=' . $request->no_transaksi_pinjaman)->with('error', 'Data gagal diapprove');;
+        }else{
+            return redirect()->to('/angsuran')->with('error', 'Gagal angsur cicilan, cek nomor KTA dan nomor transaksi');;
         }
     }
 
@@ -178,8 +182,6 @@ class AngsuranController extends Controller
         $data = DB::table('angsurans')->select('angsurans.no_transaksi', 'angsurans.no_kta', 'anggotas.nama_anggota', 'angsurans.tgl_angsuran', 'angsurans.biaya_cicilan', 'angsurans.biaya_bunga')->join('anggotas', 'anggotas.no_kta', '=', 'angsurans.no_kta')->orderBy('angsurans.updated_at', 'desc');
         if($q = $request->search){
             $data = $data->where('angsurans.no_kta','like','%'.$q.'%')
-            ->orWhere('angsurans.tgl_pinjam','like','%'.$q.'%')
-            ->orWhere('angsurans.total_pinjam','like','%'.$q.'%')
             ->orWhere('anggotas.nama_anggota','like','%'.$q.'%')
             ->orWhere('angsurans.tgl_angsuran','like','%'.$q.'%')
             ->orWhere('angsurans.biaya_cicilan','like','%'.$q.'%')

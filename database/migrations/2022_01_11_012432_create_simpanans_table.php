@@ -19,7 +19,7 @@ class CreateSimpanansTable extends Migration
             $table->datetime('tgl_deposit');
             $table->string('jenis_simpanan', 10);
             $table->string('deposit', 10);
-            $table->string('keterangan', 30);
+            $table->text('keterangan');
             $table->foreign('no_kta')->references('no_kta')->on('anggotas')->onDelete('cascade');
             $table->timestamps();
         });

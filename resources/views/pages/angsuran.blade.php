@@ -154,8 +154,8 @@
                     Filter Tanggal Angsuran
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <a class="dropdown-item" href="/angsuran?order=asc{{ $no_kta ? $no_transaksi ? '&no_kta=' . $no_kta . '&no_transaksi=' . $no_transaksi : '&no_kta=' . $no_kta : '' }}">Ascending</a>
-                    <a class="dropdown-item" href="/angsuran?order=desc{{ $no_kta ? $no_transaksi ? '&no_kta=' . $no_kta . '&no_transaksi=' . $no_transaksi : '&no_kta=' . $no_kta : '' }}">Descending</a>
+                    <a class="dropdown-item" href="/angsuran?order=asc{{ $no_kta ? $no_transaksi ? '&no_kta=' . $no_kta . '&no_transaksi=' . $no_transaksi : '&no_kta=' . $no_kta : '' }}">Terbaru</a>
+                    <a class="dropdown-item" href="/angsuran?order=desc{{ $no_kta ? $no_transaksi ? '&no_kta=' . $no_kta . '&no_transaksi=' . $no_transaksi : '&no_kta=' . $no_kta : '' }}">Terlama</a>
                 </div>
             </div>
         </div>

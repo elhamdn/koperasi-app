@@ -125,8 +125,8 @@
                     Filter Tanggal Deposit
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <a class="dropdown-item" href="/simpanan?order=asc{{ $no_kta ? '&no_kta=' . $no_kta : '' }}">Ascending</a>
-                    <a class="dropdown-item" href="/simpanan?order=desc{{ $no_kta ? '&no_kta=' . $no_kta : '' }}">Descending</a>
+                    <a class="dropdown-item" href="/simpanan?order=asc{{ $no_kta ? '&no_kta=' . $no_kta : '' }}">Terbaru</a>
+                    <a class="dropdown-item" href="/simpanan?order=desc{{ $no_kta ? '&no_kta=' . $no_kta : '' }}">Terlama</a>
                 </div>
             </div>
         </div>

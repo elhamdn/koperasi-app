@@ -6,9 +6,9 @@
         <div class="col-lg-5 col-12">
             <div id="auth-left">
                 <div class="mb-4 text-center">
-                    <img src="https://kopmafeuii.com/wp-content/uploads/2017/06/LAMBANG-KOPERASI.png" alt="Logo" srcset="" style="object-fit: contain; width: 100px;height:100px">
+                    <img src="https://www.gurupendidikan.co.id/wp-content/uploads/2020/04/Lambang-Koperasi-Baru.png" alt="Logo" srcset="" style="object-fit: contain; width: 100px;height:100px">
                 </div>
-                <h2 class="text-center text-secondary">Koperasi App</h2>
+                <h2 class="text-center text-secondary">Koperasi Mitra Karya Manunggal</h2>
                 <h3 class="text-center text-dark mb-5">Log in</h3>
                 <form method="post" action="{{ route('login') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -30,12 +30,12 @@
                             <i class="fas fa-lock"></i>
                         </div>
                     </div>
-                    <div class="form-check form-check-lg d-flex align-items-end" style="margin-left: 5px">
+                    <!-- <div class="form-check form-check-lg d-flex align-items-end" style="margin-left: 5px">
                         <input type="checkbox" class="form-check-input me-2" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="form-check-label text-gray-600" for="remember">
                             Remember Me
                         </label>
-                    </div>
+                    </div> -->
                     <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
                 </form>
                 @if (Session::has('success'))

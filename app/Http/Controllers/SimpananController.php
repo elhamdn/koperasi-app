@@ -159,8 +159,6 @@ class SimpananController extends Controller
         $data = DB::table('simpanans')->select('simpanans.no_transaksi', 'simpanans.no_kta', 'anggotas.nama_anggota', 'simpanans.tgl_deposit', 'simpanans.deposit', 'simpanans.jenis_simpanan', 'simpanans.keterangan')->join('anggotas', 'anggotas.no_kta', '=', 'simpanans.no_kta')->orderBy('simpanans.updated_at', 'desc');
         if($q = $request->search){
             $data = $data->where('simpanans.no_kta','like','%'.$q.'%')
-            ->orWhere('simpanans.tgl_pinjam','like','%'.$q.'%')
-            ->orWhere('simpanans.total_pinjam','like','%'.$q.'%')
             ->orWhere('anggotas.nama_anggota','like','%'.$q.'%')
             ->orWhere('simpanans.tgl_deposit','like','%'.$q.'%')
             ->orWhere('simpanans.deposit','like','%'.$q.'%')
