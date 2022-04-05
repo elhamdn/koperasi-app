@@ -74,12 +74,6 @@ class AnggotaController extends Controller
             // menyimpan data file yang diupload ke variabel $file
             $file = $request->file('file');
 
-            $nama_file = time()."_".$file->getClientOriginalName();
-        
-                // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'data_file';
-            $file->move($tujuan_upload,$nama_file);
-
             $anggota = new Anggota();
             $anggota->no_kta = $request->no_kta;
             $anggota->email = $request->email;
@@ -90,13 +84,25 @@ class AnggotaController extends Controller
             $anggota->password = Hash::make($request->password);
             $anggota->total_pinjaman = 0;
             $anggota->total_simpanan = 0;
-            $anggota->profile_picture = $nama_file;
+
+            if($file){
+                $nama_file = time()."_".$file->getClientOriginalName();
+        
+                // isi dengan nama folder tempat kemana file diupload
+                $tujuan_upload = 'data_file';
+                $file->move($tujuan_upload,$nama_file);
+
+                $anggota->profile_picture = $nama_file;
+            }else{
+                $anggota->profile_picture = '';
+            }
 
             $anggota->save();
 
             return redirect()->to('/master/anggota')->with('message', 'Data Berhasil');
         } catch (\Throwable $th) {
             //throw $th;
+            dd($th);
             return redirect()->to('/master/anggota')->with('error', 'Gagal Membuat Data Baru, Periksa kembali Inputan Anda');
         }
 
@@ -125,19 +131,23 @@ class AnggotaController extends Controller
             // menyimpan data file yang diupload ke variabel $file
             $file = $request->file('file');
 
-            $nama_file = time()."_".$file->getClientOriginalName();
-        
-                // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'data_file';
-            $file->move($tujuan_upload,$nama_file);
-
             $anggota = Anggota::find($request->no_kta);
             $anggota->email = $request->email;
             $anggota->jenis_kelamin = $request->jenis_kelamin;
             $anggota->nama_anggota = $request->nama_anggota;
             $anggota->alamat_anggota = $request->alamat_anggota;
             $anggota->nomor_hp = $request->nomor_hp;
-            $anggota->profile_picture = $nama_file;
+
+            if($file){
+                $nama_file = time()."_".$file->getClientOriginalName();
+        
+                // isi dengan nama folder tempat kemana file diupload
+                $tujuan_upload = 'data_file';
+                $file->move($tujuan_upload,$nama_file);
+
+                $anggota->profile_picture = $nama_file;
+            }
+
             if ($request->password) {
                 $anggota->password = Hash::make($request->password);
             }
@@ -146,6 +156,7 @@ class AnggotaController extends Controller
             return redirect()->to('/master/anggota')->with('message', 'Data Berhasil');;
         } catch (\Throwable $th) {
             //throw $th;
+            dd($th);
             return redirect()->to('/master/anggota')->with('error', 'Data gagal diapprove');;
         }
     }
