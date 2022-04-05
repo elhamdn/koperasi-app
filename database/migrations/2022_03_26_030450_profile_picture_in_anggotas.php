@@ -15,7 +15,7 @@ class ProfilePictureInAnggotas extends Migration
     {
         Schema::table('anggotas', function (Blueprint $table) {
             //
-            $table->text('profile_picture');
+            $table->text('profile_picture')->nullable();
         });
     }
 
