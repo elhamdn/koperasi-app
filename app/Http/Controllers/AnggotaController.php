@@ -97,7 +97,6 @@ class AnggotaController extends Controller
             return redirect()->to('/master/anggota')->with('message', 'Data Berhasil');
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
             return redirect()->to('/master/anggota')->with('error', 'Gagal Membuat Data Baru, Periksa kembali Inputan Anda');
         }
 
@@ -206,7 +205,6 @@ class AnggotaController extends Controller
             $angsuran = DB::select(DB::raw("select count(*) as total, no_transaksi_pinjaman from angsurans WHERE no_kta = '" . $user->no_kta . "' group by no_transaksi_pinjaman;"));
             $list_angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('created_at')->get();
         } catch (\Throwable $th) {
-            dd($th);
         }
         return view('pages.member-pinjaman', compact('pinjaman', 'user', 'angsuran', 'list_angsuran'));
     }
@@ -218,7 +216,6 @@ class AnggotaController extends Controller
         try {
             $simpanan = Simpanan::where('no_kta', $user->no_kta)->latest('created_at')->paginate(5)->withQueryString();
         } catch (\Throwable $th) {
-            dd($th);
         }
         return view('pages.member-simpanan', compact('simpanan', 'user'));
     }
@@ -230,7 +227,6 @@ class AnggotaController extends Controller
         try {
             $angsuran = Angsuran::where('no_kta', $user->no_kta)->latest('created_at')->paginate(5)->withQueryString();
         } catch (\Throwable $th) {
-            dd($th);
         }
         return view('pages.member-angsuran', compact('angsuran', 'user'));
     }

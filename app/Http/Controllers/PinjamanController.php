@@ -58,7 +58,6 @@ class PinjamanController extends Controller
             return redirect()->to('/pengajuan?no_kta=' . $request->no_kta)->with('message', 'Data Berhasil diapprove');;
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
             return redirect()->to('/pengajuan?no_kta=' . $request->no_kta)->with('error', 'Data gagal diapprove');;
         }
     }
@@ -101,7 +100,6 @@ class PinjamanController extends Controller
             $dataPinjaman->save();
             return redirect()->to('/member/pinjaman')->with('message', 'Data Berhasil Ditambahkan');;
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->to('/member/pinjaman')->with('error', 'Data Gagal Ditambahkan');;
         }
     }

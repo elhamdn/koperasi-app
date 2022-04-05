@@ -148,7 +148,6 @@ class SimpananController extends Controller
 
             return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('message', 'Tarik Dana Berhasil Ditambahkan');;
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->to('/simpanan?no_kta=' . $request->no_kta)->with('error', 'Tarik Dana Gagal Ditambahkan');;
         }
     }

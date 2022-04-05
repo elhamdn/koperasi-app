@@ -130,7 +130,6 @@ class PengurusController extends Controller
             return redirect()->to('/master/pengurus')->with('message', 'Data Berhasil');;
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
             return redirect()->to('/master/pengurus')->with('error', 'Data gagal diapprove');;
         }
     }
@@ -170,7 +169,6 @@ class PengurusController extends Controller
             return redirect()->to('/master/pengurus')->with('message', 'Data Berhasil');;
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
             return redirect()->to('/master/pengurus')->with('error', 'Data gagal diapprove');;
         }
     }
